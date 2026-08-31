@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             align-items: center;
             min-height: 100%;
         }
+
         .container {
             background: #fff;
             padding: 20px;
@@ -25,15 +27,18 @@
             max-width: 650px;
             box-sizing: border-box;
         }
+
         h2 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 20px;
             font-size: 24px;
         }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
+
         label {
             display: block;
             margin-bottom: 6px;
@@ -41,7 +46,9 @@
             color: #34495e;
             font-size: 16px;
         }
-        input, select {
+
+        input,
+        select {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
@@ -49,48 +56,56 @@
             border-radius: 5px;
             font-size: 16px;
         }
+
         .spell-text {
             font-style: italic;
             color: #e67e22;
             font-size: 16px;
-            margin-top: 4px;
+            margin-top: 10px;
         }
+
         .combo-group {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
+
         .combo-box {
             text-align: center;
         }
+
         .combo-box label {
             font-size: 16px;
             font-weight: normal;
             color: #666;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             text-align: center;
         }
+
         .combo-box input {
             text-align: center;
             font-size: 16px;
         }
+
         .result-box {
             margin-top: 20px;
             background: #eef2f3;
             padding: 12px;
             border-radius: 5px;
         }
+
         .custom-result {
             font-size: 16px;
             color: #d35400;
             font-weight: bold;
             text-align: left;
         }
+
         .spell-money {
             font-size: 16px;
             color: #27ae60;
             text-align: left;
-            margin-top: 5px;
+            margin-top: 10px;
             font-style: italic;
         }
 
@@ -98,158 +113,164 @@
             .container {
                 padding: 12px;
             }
+
             h2 {
                 font-size: 20px;
             }
-            input, select {
+
+            input,
+            select {
                 font-size: 16px;
                 padding: 8px;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>GIÁ CÀ PHÊ</h2>
-    
-    <!-- Nhập giá tiền mỗi kg: Dùng inputmode="numeric" để bật bàn phím số -->
-    <div class="form-group">
-        <label for="pricePerKg">Giá tiền:</label>
-        <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Ví dụ: 95300" oninput="handlePriceInput(this)">
-        <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
-    </div>
+    <div class="container">
+        <h2>GIÁ CÀ PHÊ</h2>
 
-    <!-- Nhập tổ hợp Tấn + Tạ + Kg -->
-    <div class="form-group">
-        <label>Nhập số lượng:</label>
-        <div class="combo-group">
-            <div class="combo-box">
-                <label>Tấn</label>
-                <input type="number" id="inputTon" value="0" min="0" oninput="calculate()">
+        <!-- Nhập giá tiền mỗi kg: Dùng inputmode="numeric" để bật bàn phím số -->
+        <div class="form-group">
+            <label for="pricePerKg">Giá tiền:</label>
+            <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg"
+                oninput="handlePriceInput(this)">
+            <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
+        </div>
+
+        <!-- Nhập tổ hợp Tấn + Tạ + Kg -->
+        <div class="form-group">
+            <label>Nhập số lượng:</label>
+            <div class="combo-group">
+                <div class="combo-box">
+                    <label>Tấn</label>
+                    <input type="number" id="inputTon" value="" min="0" placeholder="9" oninput="calculate()">
+                </div>
+                <div class="combo-box">
+                    <label>Tạ</label>
+                    <input type="number" id="inputTa" value="" min="0" placeholder="4" oninput="calculate()">
+                </div>
+                <div class="combo-box">
+                    <label>Kg</label>
+                    <input type="number" id="inputKg" value="" min="0" placeholder="30" oninput="calculate()">
+                </div>
             </div>
-            <div class="combo-box">
-                <label>Tạ</label>
-                <input type="number" id="inputTa" value="0" min="0" oninput="calculate()">
+        </div>
+
+        <div class="result-box">
+            <div class="custom-result" id="customResultText">
+                Thành tiền: 0 đ
             </div>
-            <div class="combo-box">
-                <label>Kg</label>
-                <input type="number" id="inputKg" value="0" min="0" oninput="calculate()">
+            <div class="spell-money" id="customResultWords">
+                Bằng chữ: Không đồng
             </div>
         </div>
     </div>
 
-    <div class="result-box">
-        <div class="custom-result" id="customResultText">
-            Thành tiền: 0 đ
-        </div>
-        <div class="spell-money" id="customResultWords">
-            Bằng chữ: Không đồng
-        </div>
-    </div>
-</div>
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
 
-<script>
-    function formatCurrency(amount) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-    }
+        function formatNumberInput(value) {
+            let cleanVal = value.replace(/\D/g, '');
+            if (!cleanVal) return '';
+            return parseInt(cleanVal, 10).toLocaleString('vi-VN');
+        }
 
-    function formatNumberInput(value) {
-        let cleanVal = value.replace(/\D/g, '');
-        if (!cleanVal) return '';
-        return parseInt(cleanVal, 10).toLocaleString('vi-VN');
-    }
-
-    function docSo(so) {
-        if (isNaN(so) || so <= 0) return "Không đồng";
-        const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
-        function docBlock(num) {
-            let tr = Math.floor(num / 100);
-            let ch = Math.floor((num % 100) / 10);
-            let dv = num % 10;
-            let s = "";
-            if (tr > 0 || num >= 100) {
-                s += chuSo[tr] + " trăm ";
-                if (ch === 0 && dv > 0) s += "lẻ ";
+        function docSo(so) {
+            if (isNaN(so) || so <= 0) return "Không đồng";
+            const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            function docBlock(num) {
+                let tr = Math.floor(num / 100);
+                let ch = Math.floor((num % 100) / 10);
+                let dv = num % 10;
+                let s = "";
+                if (tr > 0 || num >= 100) {
+                    s += chuSo[tr] + " trăm ";
+                    if (ch === 0 && dv > 0) s += "lẻ ";
+                }
+                if (ch > 1) {
+                    s += chuSo[ch] + " mươi ";
+                    if (dv === 1) s += "mốt ";
+                    else if (dv === 5) s += "lăm ";
+                    else if (dv > 0) s += chuSo[dv] + " ";
+                } else if (ch === 1) {
+                    s += "mười ";
+                    if (dv === 5) s += "lăm ";
+                    else if (dv > 0) s += chuSo[dv] + " ";
+                } else if (ch === 0 && dv > 0 && tr > 0) {
+                    s += chuSo[dv] + " ";
+                } else if (ch === 0 && dv > 0 && tr === 0) {
+                    s += chuSo[dv] + " ";
+                }
+                return s.trim();
             }
-            if (ch > 1) {
-                s += chuSo[ch] + " mươi ";
-                if (dv === 1) s += "mốt ";
-                else if (dv === 5) s += "lăm ";
-                else if (dv > 0) s += chuSo[dv] + " ";
-            } else if (ch === 1) {
-                s += "mười ";
-                if (dv === 5) s += "lăm ";
-                else if (dv > 0) s += chuSo[dv] + " ";
-            } else if (ch === 0 && dv > 0 && tr > 0) {
-                s += chuSo[dv] + " ";
-            } else if (ch === 0 && dv > 0 && tr === 0) {
-                s += chuSo[dv] + " ";
+
+            let billion = Math.floor(so / 1000000000);
+            let million = Math.floor((so % 1000000000) / 1000000);
+            let thousand = Math.floor((so % 1000000) / 1000);
+            let remainder = so % 1000;
+            let result = "";
+
+            if (billion > 0) {
+                result += docBlock(billion) + " tỷ ";
+                if (million === 0 && thousand === 0 && remainder > 0) result += "không triệu không nghìn ";
             }
-            return s.trim();
+            if (million > 0) {
+                result += docBlock(million) + " triệu ";
+                if (thousand === 0 && remainder > 0) result += "không nghìn ";
+            }
+            if (thousand > 0) {
+                result += docBlock(thousand) + " nghìn ";
+            }
+            if (remainder > 0) {
+                result += docBlock(remainder);
+            }
+            let finalStr = result.trim() + " đồng";
+            return finalStr.charAt(0).toUpperCase() + finalStr.slice(1);
         }
 
-        let billion = Math.floor(so / 1000000000);
-        let million = Math.floor((so % 1000000000) / 1000000);
-        let thousand = Math.floor((so % 1000000) / 1000);
-        let remainder = so % 1000;
-        let result = "";
-
-        if (billion > 0) {
-            result += docBlock(billion) + " tỷ ";
-            if (million === 0 && thousand === 0 && remainder > 0) result += "không triệu không nghìn ";
+        function handlePriceInput(input) {
+            input.value = formatNumberInput(input.value);
+            let rawVal = parseInt(input.value.replace(/\./g, ''), 10) || 0;
+            document.getElementById('priceInWords').innerText = "Bằng chữ: " + docSo(rawVal);
+            calculate();
         }
-        if (million > 0) {
-            result += docBlock(million) + " triệu ";
-            if (thousand === 0 && remainder > 0) result += "không nghìn ";
+
+        function getPricePerKg() {
+            let val = document.getElementById('pricePerKg').value.replace(/\./g, '');
+            return parseFloat(val) || 0;
         }
-        if (thousand > 0) {
-            result += docBlock(thousand) + " nghìn ";
+
+        function calculate() {
+            let pricePerKg = getPricePerKg();
+
+            let ton = parseFloat(document.getElementById('inputTon').value) || 0;
+            let ta = parseFloat(document.getElementById('inputTa').value) || 0;
+            let kg = parseFloat(document.getElementById('inputKg').value) || 0;
+
+            let totalKg = (ton * 1000) + (ta * 100) + kg;
+            let totalMoney = pricePerKg * totalKg;
+
+            let descText = [];
+            if (ton > 0) descText.push(`${ton} tấn`);
+            if (ta > 0) descText.push(`${ta} tạ`);
+            if (kg > 0 || descText.length === 0) descText.push(`${kg} kg`);
+
+            document.getElementById('customResultText').innerText =
+                `Thành tiền cho (${descText.join(' + ')}) = ${totalKg.toLocaleString('vi-VN')} kg: ${formatCurrency(totalMoney)}`;
+            document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
         }
-        if (remainder > 0) {
-            result += docBlock(remainder);
-        }
-        let finalStr = result.trim() + " đồng";
-        return finalStr.charAt(0).toUpperCase() + finalStr.slice(1);
-    }
 
-    function handlePriceInput(input) {
-        input.value = formatNumberInput(input.value);
-        let rawVal = parseInt(input.value.replace(/\./g, ''), 10) || 0;
-        document.getElementById('priceInWords').innerText = "Bằng chữ: " + docSo(rawVal);
-        calculate();
-    }
-
-    function getPricePerKg() {
-        let val = document.getElementById('pricePerKg').value.replace(/\./g, '');
-        return parseFloat(val) || 0;
-    }
-
-    function calculate() {
-        let pricePerKg = getPricePerKg();
-
-        let ton = parseFloat(document.getElementById('inputTon').value) || 0;
-        let ta = parseFloat(document.getElementById('inputTa').value) || 0;
-        let kg = parseFloat(document.getElementById('inputKg').value) || 0;
-
-        let totalKg = (ton * 1000) + (ta * 100) + kg;
-        let totalMoney = pricePerKg * totalKg;
-
-        let descText = [];
-        if (ton > 0) descText.push(`${ton} tấn`);
-        if (ta > 0) descText.push(`${ta} tạ`);
-        if (kg > 0 || descText.length === 0) descText.push(`${kg} kg`);
-
-        document.getElementById('customResultText').innerText = 
-            `Thành tiền cho (${descText.join(' + ')}) = ${totalKg.toLocaleString('vi-VN')} kg: ${formatCurrency(totalMoney)}`;
-        document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
-    }
-
-    window.onload = function() {
-        document.getElementById('pricePerKg').value = "";
-        handlePriceInput(document.getElementById('pricePerKg'));
-    };
-</script>
+        window.onload = function () {
+            document.getElementById('pricePerKg').value = "";
+            handlePriceInput(document.getElementById('pricePerKg'));
+        };
+    </script>
 
 </body>
+
 </html>
