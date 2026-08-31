@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quản Lý Giá Cà Phê</title>
+    <title>Giá Cà Phê</title>
     <link rel="icon" href="logo.png" />
     <style>
         * {
@@ -27,16 +27,16 @@
         /* Thanh điều hướng chuyển tab */
         .nav-tabs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            max-width: 650px;
+            max-width: 750px;
             margin-bottom: 15px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px;
-            font-size: 15px;
+            padding: 12px 6px;
+            font-size: 14px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
@@ -44,6 +44,7 @@
             background: #dfe4ea;
             color: #57606f;
             transition: all 0.3s;
+            text-align: center;
         }
 
         .tab-btn.active {
@@ -56,7 +57,7 @@
         .tab-content {
             display: none;
             width: 100%;
-            max-width: 650px;
+            max-width: 750px;
         }
 
         .tab-content.active {
@@ -73,20 +74,13 @@
             box-sizing: border-box;
         }
 
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 16px;
-            font-size: 22px;
-        }
-
         /* Tab 1: Giá cà phê */
         .external-price-box {
             background: #fff8e1;
             border: 1px dashed #f39c12;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             font-size: 14px;
             color: #d35400;
             text-align: center;
@@ -103,32 +97,32 @@
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: bold;
             color: #34495e;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         input,
         select {
             width: 100%;
-            padding: 10px;
+            padding: 9px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .spell-text {
             font-style: italic;
             color: #e67e22;
-            font-size: 15px;
-            margin-top: 6px;
+            font-size: 13px;
+            margin-top: 4px;
         }
 
         .combo-group {
@@ -138,42 +132,74 @@
         }
 
         .combo-box label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: normal;
             color: #666;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             text-align: center;
         }
 
         .combo-box input {
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .result-box {
-            margin-top: 20px;
-            background: #eef2f3;
+            margin-top: 16px;
+            background: #f8f9fa;
+            border: 1px solid #e1e2e6;
             padding: 12px;
             border-radius: 8px;
         }
 
         .custom-result {
-            font-size: 16px;
+            font-size: 15px;
             color: #d35400;
             font-weight: bold;
         }
 
         .spell-money {
-            font-size: 15px;
+            font-size: 13px;
             color: #27ae60;
-            margin-top: 8px;
+            margin-top: 4px;
             font-style: italic;
+        }
+
+        .extra-analysis {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #dcdde1;
+            font-size: 13px;
+            color: #2f3640;
+        }
+
+        .extra-analysis div {
+            margin-bottom: 4px;
+        }
+
+        .breakdown-table {
+            width: 100%;
+            margin-top: 6px;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .breakdown-table th,
+        .breakdown-table td {
+            border: 1px solid #dcdde1;
+            padding: 5px 8px;
+            text-align: center;
+        }
+
+        .breakdown-table th {
+            background-color: #f1f2f6;
+            color: #2c3e50;
         }
 
         /* Tab 2: Tính tiền nhanh */
         .row-header {
             display: grid;
-            grid-template-columns: 2fr 1.3fr 2.5fr 36px;
+            grid-template-columns: 2fr 1.3fr 2.6fr 36px;
             gap: 6px;
             font-weight: bold;
             font-size: 13px;
@@ -184,7 +210,7 @@
 
         .item-row {
             display: grid;
-            grid-template-columns: 2fr 1.3fr 2.5fr 36px;
+            grid-template-columns: 2fr 1.3fr 2.6fr 36px;
             gap: 6px;
             margin-bottom: 10px;
             align-items: center;
@@ -201,14 +227,20 @@
             background: #f1f2f6;
             padding: 10px 4px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             text-align: right;
             color: #2f3640;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            height: 41px;
+            min-height: 43px;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .total-cell::-webkit-scrollbar {
+            display: none;
         }
 
         .btn-del {
@@ -217,7 +249,7 @@
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            height: 41px;
+            height: 43px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -249,6 +281,7 @@
         .summary-line {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 15px;
             font-weight: bold;
             margin-bottom: 6px;
@@ -272,11 +305,72 @@
             width: 100%;
             cursor: pointer;
             margin-top: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:active {
+            background: #2f3542;
+        }
+
+        /* Tab 3: Đếm tiền */
+        .money-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .money-table th,
+        .money-table td {
+            border: 1px solid #dfe4ea;
+            padding: 10px 8px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .money-table th {
+            background-color: #f1f2f6;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .money-table td input {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2f3640;
+            padding: 8px;
+        }
+
+        /* --- TOAST NOTIFICATION THAY CHO ALERT THÔ --- */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(47, 53, 66, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 12px;
+                padding: 10px;
             }
         }
     </style>
@@ -288,12 +382,12 @@
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('coffee')">☕ Cà Phê</button>
         <button class="tab-btn" onclick="switchTab('fastcalc')">🧮 Tính Tiền</button>
+        <button class="tab-btn" onclick="switchTab('counting')">💵 Đếm Tiền</button>
     </div>
 
     <!-- TAB 1: GIÁ CÀ PHÊ -->
     <div id="tab-coffee" class="tab-content active">
         <div class="container">
-            <h2>GIÁ CÀ PHÊ</h2>
 
             <div class="external-price-box">
                 📊 Cập nhật giá cà phê mới nhất:
@@ -328,15 +422,31 @@
             <div class="result-box">
                 <div class="custom-result" id="customResultText">Thành tiền: 0 đ</div>
                 <div class="spell-money" id="customResultWords">Bằng chữ: Không đồng</div>
+
+                <div class="extra-analysis">
+                    <div id="monthlyResult">📅 Mỗi tháng thu nhập: 0 đ / tháng</div>
+                    <div style="font-weight: bold; margin-top: 6px;">💵 Quy đổi mệnh giá tiền:</div>
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Mệnh giá</th>
+                                <th>Số lượng tờ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdownBody">
+                            <!-- Dữ liệu mệnh giá tự động điền -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <button class="btn-copy" onclick="copyCoffeeContent()">📋 Sao chép</button>
         </div>
     </div>
 
     <!-- TAB 2: TÍNH TIỀN NHANH -->
     <div id="tab-fastcalc" class="tab-content">
         <div class="container">
-            <h2>Tính Tiền Nhanh</h2>
-
             <div class="row-header">
                 <div>Đơn giá</div>
                 <div>Số lượng</div>
@@ -356,11 +466,52 @@
                 <div class="summary-words" id="grand-total-words">Không đồng</div>
             </div>
 
-            <button class="btn-copy" onclick="copyContent()">Sao chép kết quả</button>
+            <button class="btn-copy" onclick="copyContent()">📋 Sao chép</button>
         </div>
     </div>
 
+    <!-- TAB 3: ĐẾM TIỀN -->
+    <div id="tab-counting" class="tab-content">
+        <div class="container">
+            <table class="money-table">
+                <thead>
+                    <tr>
+                        <th>Mệnh giá</th>
+                        <th>Số tờ</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody id="moneyCountingBody">
+                    <!-- Tự động tạo bằng JS -->
+                </tbody>
+            </table>
+
+            <div class="summary-box">
+                <div class="summary-line">
+                    <span>Tổng tiền đếm được:</span>
+                    <span id="moneyGrandTotal">0 VND</span>
+                </div>
+                <div class="summary-words" id="moneyGrandWords">Không đồng</div>
+            </div>
+
+            <button class="btn-copy" onclick="copyMoneyContent()">📋 Sao chép</button>
+        </div>
+    </div>
+
+    <!-- KHUNG THÔNG BÁO TOAST (THAY THẾ ALERT) -->
+    <div id="toast-notification">✅ Đã sao chép vào bộ nhớ tạm!</div>
+
     <script>
+        /* --- HÀM HIỂN THỊ TOAST MƯỢT MÀ --- */
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            toast.innerHTML = `✅ ${message}`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
         /* --- CHỨC NĂNG CHUYỂN TAB --- */
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -369,13 +520,16 @@
             if (tabName === 'coffee') {
                 document.getElementById('tab-coffee').classList.add('active');
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
-            } else {
+            } else if (tabName === 'fastcalc') {
                 document.getElementById('tab-fastcalc').classList.add('active');
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            } else if (tabName === 'counting') {
+                document.getElementById('tab-counting').classList.add('active');
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
             }
         }
 
-        /* --- HÀM ĐỌC SỐ CHUNG --- */
+        /* --- HÀM ĐỌC SỐ MỞ RỘNG (HỖ TRỢ MỌI SỐ CỰC LỚN) --- */
         function docSo(so) {
             if (isNaN(so) || so <= 0) return "Không đồng";
             const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
@@ -418,37 +572,29 @@
                 return chữ_số;
             }
 
-            function dochangtrieu(num, dau) {
-                let trieu = Math.floor(num / 1000000);
-                let dư = num % 1000000;
-                let chữ_số = "";
-                if (trieu > 0) {
-                    chữ_số = dochangtram(trieu, dau) + " triệu";
-                    dau = true;
-                }
-                let nghin = Math.floor(dư / 1000);
-                dư = dư % 1000;
-                if (nghin > 0) {
-                    chữ_số += dochangtram(nghin, dau) + " nghìn";
-                    dau = true;
-                }
-                if (dư > 0) {
-                    chữ_số += dochangtram(dư, dau);
-                }
-                return chữ_số;
+            let units = ["", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ", " tỷ tỷ"];
+            let parts = [];
+            let tempSo = so;
+
+            while (tempSo > 0) {
+                parts.push(tempSo % 1000);
+                tempSo = Math.floor(tempSo / 1000);
             }
 
             let kq = "";
-            let ty = Math.floor(so / 1000000000);
-            let duTy = so % 1000000000;
-            if (ty > 0) {
-                kq = dochangtram(ty, false) + " tỷ";
-                let trieu = Math.floor(duTy / 1000000);
-                if (trieu > 0) kq += dochangtrieu(duTy, true);
-                else if (duTy > 0) kq += " không trăm lẻ" + dochangtram(duTy, true);
-            } else {
-                kq = dochangtrieu(so, false);
+            for (let i = parts.length - 1; i >= 0; i--) {
+                if (parts[i] > 0) {
+                    let subStr = dochangtram(parts[i], i < parts.length - 1 && parts[i] < 100);
+                    if (i < parts.length - 1 && parts[i] < 100 && parts[i] >= 10) {
+                        subStr = " không trăm lẻ" + dochangchuc(parts[i], true);
+                    } else if (i < parts.length - 1 && parts[i] < 10) {
+                        subStr = " không trăm lẻ " + chuSo[parts[i]];
+                    }
+                    let unitIndex = i < units.length ? i : units.length - 1;
+                    kq += subStr + units[unitIndex];
+                }
             }
+
             kq = kq.trim();
             return kq.charAt(0).toUpperCase() + kq.slice(1) + " đồng";
         }
@@ -490,16 +636,75 @@
             document.getElementById('customResultText').innerText =
                 `Thành tiền cho (${descText.join(' + ')}) = ${totalKg.toLocaleString('vi-VN')} kg: ${formatCurrency(totalMoney)}`;
             document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
+
+            let monthlyMoney = totalMoney / 12;
+            document.getElementById('monthlyResult').innerText = `📅 Chia 12 tháng: ${formatCurrency(monthlyMoney)} / tháng (Bằng chữ: ${docSo(Math.round(monthlyMoney))})`;
+
+            let denominations = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000];
+            let remaining = Math.round(totalMoney);
+            let tbody = document.getElementById('breakdownBody');
+            tbody.innerHTML = "";
+
+            let hasDenom = false;
+            denominations.forEach(denom => {
+                let count = Math.floor(remaining / denom);
+                remaining %= denom;
+
+                if (count > 0) {
+                    hasDenom = true;
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${denom.toLocaleString('vi-VN')} đ</td><td><b>${count.toLocaleString('vi-VN')}</b> tờ</td>`;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            if (!hasDenom) {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="2" style="color: #888; font-style: italic;">Không có mệnh giá phù hợp</td>`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function copyCoffeeContent() {
+            let priceStr = document.getElementById('pricePerKg').value || "0";
+            let ton = document.getElementById('inputTon').value || "0";
+            let ta = document.getElementById('inputTa').value || "0";
+            let kg = document.getElementById('inputKg').value || "0";
+
+            let resultText = document.getElementById('customResultText').innerText;
+            let resultWords = document.getElementById('customResultWords').innerText;
+            let monthlyText = document.getElementById('monthlyResult').innerText;
+
+            let textToCopy = "☕ THỐNG KÊ GIÁ CÀ PHÊ\n-------------------------\n";
+            textToCopy += `+ Đơn giá: ${priceStr} đ/kg\n`;
+            textToCopy += `+ Số lượng nhập: ${ton} tấn, ${ta} tạ, ${kg} kg\n`;
+            textToCopy += `-------------------------\n`;
+            textToCopy += `+ ${resultText}\n`;
+            textToCopy += `+ ${resultWords}\n`;
+            textToCopy += `+ ${monthlyText}\n`;
+
+            let breakdownRows = document.querySelectorAll("#breakdownBody tr");
+            if (breakdownRows.length > 0 && !breakdownRows[0].innerText.includes("Không có")) {
+                textToCopy += `\nQuy đổi mệnh giá:\n`;
+                breakdownRows.forEach(tr => {
+                    let cells = tr.querySelectorAll("td");
+                    if (cells.length >= 2) {
+                        textToCopy += `- ${cells[0].innerText}: ${cells[1].innerText}\n`;
+                    }
+                });
+            }
+
+            const now = new Date();
+            textToCopy += `\nThời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast("Đã sao chép nội dung Cà Phê!");
+            }).catch(() => {
+                showToast("Không thể sao chép tự động!");
+            });
         }
 
         /* --- SCRIPT CHO TAB 2 (TÍNH TIỀN NHANH) --- */
-        function adjustInputFontSize(input) {
-            const len = input.value.length;
-            if (len > 10) input.style.fontSize = "10px";
-            else if (len > 7) input.style.fontSize = "12px";
-            else input.style.fontSize = "14px";
-        }
-
         function addRow(price = "", qty = "") {
             const container = document.getElementById("list-container");
             const row = document.createElement("div");
@@ -512,7 +717,6 @@
                 <button class="btn-del" onclick="removeRow(this)">×</button>
             `;
             container.appendChild(row);
-            row.querySelectorAll("input").forEach(input => adjustInputFontSize(input));
             calculateAll();
         }
 
@@ -524,7 +728,6 @@
         function onInputChanged(input) {
             let rawVal = input.value.replace(/\D/g, "");
             input.value = formatNumber(rawVal);
-            adjustInputFontSize(input);
             calculateAll();
         }
 
@@ -538,12 +741,7 @@
                 const total = priceVal * qtyVal;
 
                 const totalCell = row.querySelector(".total-cell");
-                const totalText = formatNumber(total) + " VND";
-                totalCell.innerText = totalText;
-
-                if (totalText.length > 13) totalCell.style.fontSize = "9px";
-                else if (totalText.length > 10) totalCell.style.fontSize = "11px";
-                else totalCell.style.fontSize = "13px";
+                totalCell.innerText = formatNumber(total) + " VND";
 
                 grandTotal += total;
             });
@@ -553,7 +751,7 @@
         }
 
         function copyContent() {
-            let textToCopy = "HÓA ĐƠN\n--------\n";
+            let textToCopy = "HÓA ĐƠN TÍNH TIỀN\n-------------------------\n";
             const rows = document.querySelectorAll(".item-row");
             let index = 1;
 
@@ -568,15 +766,91 @@
             const grandTotalText = document.getElementById("grand-total").innerText;
             const grandTotalWords = document.getElementById("grand-total-words").innerText;
 
-            textToCopy += `--------\nTổng tiền:\nBằng số: ${grandTotalText}\nBằng chữ: ${grandTotalWords}\n`;
+            textToCopy += `-------------------------\n`;
+            textToCopy += `Tổng tiền:\nBằng số: ${grandTotalText}\nBằng chữ: ${grandTotalWords}\n`;
 
             const now = new Date();
             textToCopy += `Thời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                alert("Đã sao chép thành công vào bộ nhớ tạm!");
+                showToast("Đã sao chép hóa đơn thành công!");
             }).catch(() => {
-                alert("Không thể sao chép tự động!");
+                showToast("Không thể sao chép tự động!");
+            });
+        }
+
+        /* --- SCRIPT CHO TAB 3 (ĐẾM TIỀN) --- */
+        const moneyDenominations = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100];
+
+        function initMoneyCounting() {
+            const tbody = document.getElementById('moneyCountingBody');
+            tbody.innerHTML = "";
+
+            moneyDenominations.forEach((denom, index) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: bold; color: #2c3e50;">${denom.toLocaleString('vi-VN')} đ</td>
+                    <td>
+                        <input type="text" class="money-qty-input" data-denom="${denom}" value="" placeholder="0" oninput="onMoneyInputChanged(this)" inputmode="numeric">
+                    </td>
+                    <td class="money-row-total" style="font-weight: bold; color: #d35400; text-align: right;">0 đ</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function onMoneyInputChanged(input) {
+            let rawVal = input.value.replace(/\D/g, "");
+            input.value = formatNumber(rawVal);
+            calculateMoneyTotal();
+        }
+
+        function calculateMoneyTotal() {
+            const rows = document.querySelectorAll("#moneyCountingBody tr");
+            let grandTotal = 0;
+
+            rows.forEach(row => {
+                const input = row.querySelector(".money-qty-input");
+                const denom = parseFloat(input.getAttribute("data-denom")) || 0;
+                const qty = parseFloat(input.value.replace(/\./g, "")) || 0;
+                const rowTotal = denom * qty;
+
+                row.querySelector(".money-row-total").innerText = formatNumber(rowTotal) + " đ";
+                grandTotal += rowTotal;
+            });
+
+            document.getElementById("moneyGrandTotal").innerText = formatNumber(grandTotal) + " VND";
+            document.getElementById("moneyGrandWords").innerText = docSo(grandTotal);
+        }
+
+        function copyMoneyContent() {
+            let textToCopy = "💵 BẢNG THỐNG KÊ ĐẾM TIỀN MẶT\n---------------------------------\n";
+            const rows = document.querySelectorAll("#moneyCountingBody tr");
+
+            rows.forEach(row => {
+                const denomText = row.cells[0].innerText;
+                const qtyVal = row.querySelector(".money-qty-input").value || "0";
+                const totalText = row.querySelector(".money-row-total").innerText;
+
+                if (parseInt(qtyVal.replace(/\./g, "")) > 0) {
+                    textToCopy += `- Mệnh giá ${denomText}: ${qtyVal} tờ = ${totalText}\n`;
+                }
+            });
+
+            const grandTotalText = document.getElementById("moneyGrandTotal").innerText;
+            const grandTotalWords = document.getElementById("moneyGrandWords").innerText;
+
+            textToCopy += `---------------------------------\n`;
+            textToCopy += `Tổng cộng số tiền: ${grandTotalText}\n`;
+            textToCopy += `Bằng chữ: ${grandTotalWords}\n`;
+
+            const now = new Date();
+            textToCopy += `Thời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast("Đã sao chép bảng đếm tiền!");
+            }).catch(() => {
+                showToast("Không thể sao chép tự động!");
             });
         }
 
@@ -585,6 +859,7 @@
             handlePriceInput(document.getElementById('pricePerKg'));
             addRow();
             addRow();
+            initMoneyCounting();
         };
     </script>
 </body>
