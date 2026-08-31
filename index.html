@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giá cà phê</title>
+    <link rel="icon" href="logo.png" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100%;
         }
         .container {
             background: #fff;
@@ -28,7 +29,7 @@
             text-align: center;
             color: #2c3e50;
             margin-bottom: 20px;
-            font-size: 22px;
+            font-size: 24px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -38,7 +39,7 @@
             margin-bottom: 6px;
             font-weight: bold;
             color: #34495e;
-            font-size: 14px;
+            font-size: 16px;
         }
         input, select {
             width: 100%;
@@ -51,7 +52,7 @@
         .spell-text {
             font-style: italic;
             color: #e67e22;
-            font-size: 13px;
+            font-size: 16px;
             margin-top: 4px;
         }
         .combo-group {
@@ -59,11 +60,19 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
+        .combo-box {
+            text-align: center;
+        }
         .combo-box label {
-            font-size: 12px;
+            font-size: 16px;
             font-weight: normal;
             color: #666;
             margin-bottom: 2px;
+            text-align: center;
+        }
+        .combo-box input {
+            text-align: center;
+            font-size: 16px;
         }
         .result-box {
             margin-top: 20px;
@@ -72,83 +81,17 @@
             border-radius: 5px;
         }
         .custom-result {
-            font-size: 15px;
+            font-size: 16px;
             color: #d35400;
             font-weight: bold;
-            text-align: center;
-        }
-        .spell-money {
-            font-size: 13px;
-            color: #27ae60;
-            text-align: center;
-            margin-top: 5px;
-            font-style: italic;
-        }
-        .dynamic-table {
-            margin-top: 15px;
-            max-height: 220px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #fff;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-        th, td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #eee;
             text-align: left;
         }
-        th {
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-        td:last-child, th:last-child {
-            text-align: right;
+        .spell-money {
+            font-size: 16px;
             color: #27ae60;
-            font-weight: bold;
-        }
-        .sub-spell {
-            font-size: 11px;
-            color: #7f8c8d;
-            font-weight: normal;
-            display: block;
-        }
-        .custom-check-box {
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            flex-wrap: wrap;
-        }
-        .custom-check-box span.title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #34495e;
-            width: 100%;
-        }
-        .custom-check-box input {
-            flex: 2;
-            min-width: 100px;
-        }
-        .custom-check-box select {
-            flex: 1.5;
-            min-width: 90px;
-        }
-        .custom-check-result {
-            width: 100%;
-            text-align: right;
+            text-align: left;
             margin-top: 5px;
+            font-style: italic;
         }
 
         /* Tối ưu cho màn hình điện thoại nhỏ */
@@ -157,10 +100,10 @@
                 padding: 12px;
             }
             h2 {
-                font-size: 18px;
+                font-size: 20px;
             }
             input, select {
-                font-size: 14px;
+                font-size: 16px;
                 padding: 8px;
             }
         }
@@ -169,18 +112,18 @@
 <body>
 
 <div class="container">
-    <h2>Tính Giá Cà Phê</h2>
+    <h2>GIÁ CÀ PHÊ</h2>
     
     <!-- Nhập giá tiền mỗi kg -->
     <div class="form-group">
-        <label for="pricePerKg">Giá tiền mỗi 1 kg (VNĐ):</label>
-        <input type="text" id="pricePerKg" placeholder="Ví dụ: 95.300" oninput="handlePriceInput(this)">
+        <label for="pricePerKg">Giá tiền:</label>
+        <input type="text" id="pricePerKg" placeholder="Giá mỗi kg Ví dụ: 95.300 vnđ" oninput="handlePriceInput(this)">
         <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
     </div>
 
     <!-- Nhập tổ hợp Tấn + Tạ + Kg -->
     <div class="form-group">
-        <label>Nhập số lượng tùy chọn (Tấn, Tạ, Kg):</label>
+        <label>Nhập số lượng:</label>
         <div class="combo-group">
             <div class="combo-box">
                 <label>Tấn</label>
@@ -192,7 +135,7 @@
             </div>
             <div class="combo-box">
                 <label>Kg</label>
-                <input type="number" id="inputKg" value="1" min="0" oninput="calculate()">
+                <input type="number" id="inputKg" value="0" min="0" oninput="calculate()">
             </div>
         </div>
     </div>
@@ -203,35 +146,6 @@
         </div>
         <div class="spell-money" id="customResultWords">
             Bằng chữ: Không đồng
-        </div>
-    </div>
-
-    <!-- Bảng tra cứu tự động từ 1 tạ đến 10 tấn -->
-    <div class="dynamic-table">
-        <table id="priceTable">
-            <thead>
-                <tr>
-                    <th>Số lượng</th>
-                    <th>Quy ra Kg</th>
-                    <th>Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-
-    <!-- Ô mốc tùy ý có chọn đơn vị Kg, Tạ, Tấn -->
-    <div class="custom-check-box">
-        <span class="title">Thêm mốc tùy ý:</span>
-        <input type="number" id="customCheckVal" placeholder="Nhập số lượng..." value="" oninput="calculate()">
-        <select id="customCheckUnit" onchange="calculate()">
-            <option value="kg">Kg</option>
-            <option value="ta">Tạ</option>
-            <option value="tan">Tấn</option>
-        </select>
-        <div class="custom-check-result">
-            <span id="customCheckMoney" style="font-weight: bold; color: #27ae60; font-size: 15px;">0 đ</span>
-            <div id="customCheckWords" style="font-size: 12px; color: #e67e22; font-style: italic;">Bằng chữ: Không đồng</div>
         </div>
     </div>
 </div>
@@ -316,7 +230,6 @@
     function calculate() {
         let pricePerKg = getPricePerKg();
 
-        // 1. Tính ô tổ hợp Tấn + Tạ + Kg
         let ton = parseFloat(document.getElementById('inputTon').value) || 0;
         let ta = parseFloat(document.getElementById('inputTa').value) || 0;
         let kg = parseFloat(document.getElementById('inputKg').value) || 0;
@@ -332,45 +245,6 @@
         document.getElementById('customResultText').innerText = 
             `Thành tiền cho (${descText.join(' + ')}) = ${totalKg.toLocaleString('vi-VN')} kg: ${formatCurrency(totalMoney)}`;
         document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
-
-        // 2. Tạo bảng động từ 1 tạ đến 10 tấn
-        let tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = '';
-
-        let milestones = [
-            { label: '1 Tạ', kg: 100 }, { label: '2 Tạ', kg: 200 }, { label: '3 Tạ', kg: 300 },
-            { label: '4 Tạ', kg: 400 }, { label: '5 Tạ', kg: 500 }, { label: '6 Tạ', kg: 600 },
-            { label: '7 Tạ', kg: 700 }, { label: '8 Tạ', kg: 800 }, { label: '9 Tạ', kg: 900 },
-            { label: '1 Tấn', kg: 1000 }, { label: '2 Tấn', kg: 2000 }, { label: '3 Tấn', kg: 3000 },
-            { label: '4 Tấn', kg: 4000 }, { label: '5 Tấn', kg: 5000 }, { label: '6 Tấn', kg: 6000 },
-            { label: '7 Tấn', kg: 7000 }, { label: '8 Tấn', kg: 8000 }, { label: '9 Tấn', kg: 9000 },
-            { label: '10 Tấn', kg: 10000 }
-        ];
-
-        milestones.forEach(m => {
-            let money = pricePerKg * m.kg;
-            let row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${m.label}</td>
-                <td>${m.kg.toLocaleString('vi-VN')} kg</td>
-                <td>
-                    ${formatCurrency(money)}
-                    <span class="sub-spell">${docSo(money)}</span>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-
-        // 3. Xử lý mốc tùy ý có chọn đơn vị
-        let customVal = parseFloat(document.getElementById('customCheckVal').value) || 0;
-        let customUnit = document.getElementById('customCheckUnit').value;
-        let customKg = customVal;
-        if (customUnit === 'ta') customKg = customVal * 100;
-        if (customUnit === 'tan') customKg = customVal * 1000;
-
-        let customMoney = pricePerKg * customKg;
-        document.getElementById('customCheckMoney').innerText = formatCurrency(customMoney);
-        document.getElementById('customCheckWords').innerText = "Bằng chữ: " + docSo(customMoney);
     }
 
     // Chạy mặc định khi tải trang
