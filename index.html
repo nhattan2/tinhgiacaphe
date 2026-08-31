@@ -3,39 +3,84 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giá cà phê</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quản Lý Giá Cà Phê & Tính Tiền Nhanh</title>
     <link rel="icon" href="logo.png" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100%;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Thanh điều hướng chuyển tab */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 650px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #dfe4ea;
+            color: #57606f;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #2ed573;
+            color: white;
+            box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
+        }
+
+        /* Khu vực chứa các tab */
+        .tab-content {
+            display: none;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* CSS chung cho các khung container */
         .container {
             background: #fff;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 650px;
             box-sizing: border-box;
         }
 
         h2 {
             text-align: center;
             color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 16px;
+            font-size: 22px;
         }
 
-        /* Khung hiển thị bảng giá nhanh */
+        /* Tab 1: Giá cà phê */
         .external-price-box {
             background: #fff8e1;
             border: 1px dashed #f39c12;
@@ -66,7 +111,7 @@
             margin-bottom: 6px;
             font-weight: bold;
             color: #34495e;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         input,
@@ -82,8 +127,8 @@
         .spell-text {
             font-style: italic;
             color: #e67e22;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 15px;
+            margin-top: 6px;
         }
 
         .combo-group {
@@ -92,12 +137,8 @@
             gap: 8px;
         }
 
-        .combo-box {
-            text-align: center;
-        }
-
         .combo-box label {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: normal;
             color: #666;
             margin-bottom: 4px;
@@ -113,37 +154,129 @@
             margin-top: 20px;
             background: #eef2f3;
             padding: 12px;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         .custom-result {
             font-size: 16px;
             color: #d35400;
             font-weight: bold;
-            text-align: left;
         }
 
         .spell-money {
-            font-size: 16px;
+            font-size: 15px;
             color: #27ae60;
-            text-align: left;
-            margin-top: 10px;
+            margin-top: 8px;
             font-style: italic;
+        }
+
+        /* Tab 2: Tính tiền nhanh */
+        .row-header {
+            display: grid;
+            grid-template-columns: 2fr 1.3fr 2.5fr 36px;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1.3fr 2.5fr 36px;
+            gap: 6px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .item-row input {
+            text-align: right;
+            padding: 10px 4px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .total-cell {
+            background: #f1f2f6;
+            padding: 10px 4px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: right;
+            color: #2f3640;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 41px;
+        }
+
+        .btn-del {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            height: 41px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add {
+            background: #2ed573;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .summary-box {
+            background: #f8f9fa;
+            border: 1px solid #dcdde1;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .summary-words {
+            font-size: 13px;
+            color: #57606f;
+            font-style: italic;
+            text-align: right;
+        }
+
+        .btn-copy {
+            background: #3742fa;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 12px;
         }
 
         @media (max-width: 480px) {
             .container {
                 padding: 12px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            input,
-            select {
-                font-size: 16px;
-                padding: 8px;
             }
         }
     </style>
@@ -151,130 +284,196 @@
 
 <body>
 
-    <div class="container">
-        <h2>GIÁ CÀ PHÊ</h2>
+    <!-- Thanh chuyển Tab -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('coffee')">☕ Cà Phê</button>
+        <button class="tab-btn" onclick="switchTab('fastcalc')">🧮 Tính Tiền</button>
+    </div>
 
-        <!-- Khung xem bảng giá trực tiếp từ nguồn ngoài -->
-        <div class="external-price-box">
-            📊 Cập nhật giá cà phê mới nhất:
-            <a href="https://giacaphe.com/gia-ca-phe-noi-dia/" target="_blank">Xem giá tại đây</a>
-        </div>
+    <!-- TAB 1: GIÁ CÀ PHÊ -->
+    <div id="tab-coffee" class="tab-content active">
+        <div class="container">
+            <h2>GIÁ CÀ PHÊ</h2>
 
-        <!-- Nhập giá tiền mỗi kg -->
-        <div class="form-group">
-            <label for="pricePerKg">Giá tiền:</label>
-            <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg"
-                oninput="handlePriceInput(this)">
-            <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
-        </div>
+            <div class="external-price-box">
+                📊 Cập nhật giá cà phê mới nhất:
+                <a href="https://giacaphe.com/gia-ca-phe-noi-dia/" target="_blank">Xem giá tại đây</a>
+            </div>
 
-        <!-- Nhập tổ hợp Tấn + Tạ + Kg -->
-        <div class="form-group">
-            <label>Nhập số lượng:</label>
-            <div class="combo-group">
-                <div class="combo-box">
-                    <label>Tấn</label>
-                    <input type="number" id="inputTon" value="" min="0" placeholder="9" oninput="calculate()">
-                </div>
-                <div class="combo-box">
-                    <label>Tạ</label>
-                    <input type="number" id="inputTa" value="" min="0" placeholder="4" oninput="calculate()">
-                </div>
-                <div class="combo-box">
-                    <label>Kg</label>
-                    <input type="number" id="inputKg" value="" min="0" placeholder="30" oninput="calculate()">
+            <div class="form-group">
+                <label for="pricePerKg">Giá tiền:</label>
+                <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg"
+                    oninput="handlePriceInput(this)">
+                <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
+            </div>
+
+            <div class="form-group">
+                <label>Nhập số lượng:</label>
+                <div class="combo-group">
+                    <div class="combo-box">
+                        <label>Tấn</label>
+                        <input type="number" id="inputTon" value="" min="0" placeholder="9" oninput="calculateCoffee()">
+                    </div>
+                    <div class="combo-box">
+                        <label>Tạ</label>
+                        <input type="number" id="inputTa" value="" min="0" placeholder="4" oninput="calculateCoffee()">
+                    </div>
+                    <div class="combo-box">
+                        <label>Kg</label>
+                        <input type="number" id="inputKg" value="" min="0" placeholder="30" oninput="calculateCoffee()">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="result-box">
-            <div class="custom-result" id="customResultText">
-                Thành tiền: 0 đ
-            </div>
-            <div class="spell-money" id="customResultWords">
-                Bằng chữ: Không đồng
+            <div class="result-box">
+                <div class="custom-result" id="customResultText">Thành tiền: 0 đ</div>
+                <div class="spell-money" id="customResultWords">Bằng chữ: Không đồng</div>
             </div>
         </div>
     </div>
 
+    <!-- TAB 2: TÍNH TIỀN NHANH -->
+    <div id="tab-fastcalc" class="tab-content">
+        <div class="container">
+            <h2>Tính Tiền Nhanh</h2>
+
+            <div class="row-header">
+                <div>Đơn giá</div>
+                <div>Số lượng</div>
+                <div>Thành tiền (VND)</div>
+                <div></div>
+            </div>
+
+            <div id="list-container"></div>
+
+            <button class="btn-add" onclick="addRow()">+ Thêm hàng</button>
+
+            <div class="summary-box">
+                <div class="summary-line">
+                    <span>Tổng tiền:</span>
+                    <span id="grand-total">0 VND</span>
+                </div>
+                <div class="summary-words" id="grand-total-words">Không đồng</div>
+            </div>
+
+            <button class="btn-copy" onclick="copyContent()">Sao chép kết quả</button>
+        </div>
+    </div>
+
     <script>
+        /* --- CHỨC NĂNG CHUYỂN TAB --- */
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            if (tabName === 'coffee') {
+                document.getElementById('tab-coffee').classList.add('active');
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('tab-fastcalc').classList.add('active');
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+        }
+
+        /* --- HÀM ĐỌC SỐ CHUNG --- */
+        function docSo(so) {
+            if (isNaN(so) || so <= 0) return "Không đồng";
+            const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+
+            function dochangchuc(num, dau) {
+                let chữ_số = "";
+                let chuc = Math.floor(num / 10);
+                let donvi = num % 10;
+                if (chuc > 1) {
+                    chữ_số = " " + chuSo[chuc] + " mươi";
+                    if (donvi === 1) chữ_số += " mốt";
+                    else if (donvi === 5) chữ_số += " lăm";
+                    else if (donvi > 0) chữ_số += " " + chuSo[donvi];
+                } else if (chuc === 1) {
+                    chữ_số = " mười";
+                    if (donvi === 1) chữ_số += " một";
+                    else if (donvi === 5) chữ_số += " lăm";
+                    else if (donvi > 0) chữ_số += " " + chuSo[donvi];
+                } else if (dau && donvi > 0) {
+                    chữ_số = " lẻ";
+                    if (donvi === 5) chữ_số += " lăm";
+                    else chữ_số += " " + chuSo[donvi];
+                }
+                if (chuc === 0 && donvi > 0 && !dau && num > 0) {
+                    chữ_số = " " + chuSo[donvi];
+                }
+                return chữ_số;
+            }
+
+            function dochangtram(num, dau) {
+                let tram = Math.floor(num / 100);
+                let chuc = num % 100;
+                let chữ_số = "";
+                if (dau || tram > 0) {
+                    chữ_số = " " + chuSo[tram] + " trăm";
+                    chữ_số += dochangchuc(chuc, true);
+                } else {
+                    chữ_số = dochangchuc(chuc, false);
+                }
+                return chữ_số;
+            }
+
+            function dochangtrieu(num, dau) {
+                let trieu = Math.floor(num / 1000000);
+                let dư = num % 1000000;
+                let chữ_số = "";
+                if (trieu > 0) {
+                    chữ_số = dochangtram(trieu, dau) + " triệu";
+                    dau = true;
+                }
+                let nghin = Math.floor(dư / 1000);
+                dư = dư % 1000;
+                if (nghin > 0) {
+                    chữ_số += dochangtram(nghin, dau) + " nghìn";
+                    dau = true;
+                }
+                if (dư > 0) {
+                    chữ_số += dochangtram(dư, dau);
+                }
+                return chữ_số;
+            }
+
+            let kq = "";
+            let ty = Math.floor(so / 1000000000);
+            let duTy = so % 1000000000;
+            if (ty > 0) {
+                kq = dochangtram(ty, false) + " tỷ";
+                let trieu = Math.floor(duTy / 1000000);
+                if (trieu > 0) kq += dochangtrieu(duTy, true);
+                else if (duTy > 0) kq += " không trăm lẻ" + dochangtram(duTy, true);
+            } else {
+                kq = dochangtrieu(so, false);
+            }
+            kq = kq.trim();
+            return kq.charAt(0).toUpperCase() + kq.slice(1) + " đồng";
+        }
+
         function formatCurrency(amount) {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
         }
 
-        function formatNumberInput(value) {
-            let cleanVal = value.replace(/\D/g, '');
-            if (!cleanVal) return '';
-            return parseInt(cleanVal, 10).toLocaleString('vi-VN');
+        function formatNumber(num) {
+            if (isNaN(num) || num === "") return "";
+            return Number(num).toLocaleString('vi-VN');
         }
 
-        function docSo(so) {
-            if (isNaN(so) || so <= 0) return "Không đồng";
-            const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
-            function docBlock(num) {
-                let tr = Math.floor(num / 100);
-                let ch = Math.floor((num % 100) / 10);
-                let dv = num % 10;
-                let s = "";
-                if (tr > 0 || num >= 100) {
-                    s += chuSo[tr] + " trăm ";
-                    if (ch === 0 && dv > 0) s += "lẻ ";
-                }
-                if (ch > 1) {
-                    s += chuSo[ch] + " mươi ";
-                    if (dv === 1) s += "mốt ";
-                    else if (dv === 5) s += "lăm ";
-                    else if (dv > 0) s += chuSo[dv] + " ";
-                } else if (ch === 1) {
-                    s += "mười ";
-                    if (dv === 5) s += "lăm ";
-                    else if (dv > 0) s += chuSo[dv] + " ";
-                } else if (ch === 0 && dv > 0 && tr > 0) {
-                    s += chuSo[dv] + " ";
-                } else if (ch === 0 && dv > 0 && tr === 0) {
-                    s += chuSo[dv] + " ";
-                }
-                return s.trim();
-            }
-
-            let billion = Math.floor(so / 1000000000);
-            let million = Math.floor((so % 1000000000) / 1000000);
-            let thousand = Math.floor((so % 1000000) / 1000);
-            let remainder = so % 1000;
-            let result = "";
-
-            if (billion > 0) {
-                result += docBlock(billion) + " tỷ ";
-                if (million === 0 && thousand === 0 && remainder > 0) result += "không triệu không nghìn ";
-            }
-            if (million > 0) {
-                result += docBlock(million) + " triệu ";
-                if (thousand === 0 && remainder > 0) result += "không nghìn ";
-            }
-            if (thousand > 0) {
-                result += docBlock(thousand) + " nghìn ";
-            }
-            if (remainder > 0) {
-                result += docBlock(remainder);
-            }
-            let finalStr = result.trim() + " đồng";
-            return finalStr.charAt(0).toUpperCase() + finalStr.slice(1);
-        }
-
+        /* --- SCRIPT CHO TAB 1 (GIÁ CÀ PHÊ) --- */
         function handlePriceInput(input) {
-            input.value = formatNumberInput(input.value);
+            let cleanVal = input.value.replace(/\D/g, '');
+            input.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('vi-VN') : '';
             let rawVal = parseInt(input.value.replace(/\./g, ''), 10) || 0;
             document.getElementById('priceInWords').innerText = "Bằng chữ: " + docSo(rawVal);
-            calculate();
+            calculateCoffee();
         }
 
-        function getPricePerKg() {
-            let val = document.getElementById('pricePerKg').value.replace(/\./g, '');
-            return parseFloat(val) || 0;
-        }
-
-        function calculate() {
-            let pricePerKg = getPricePerKg();
+        function calculateCoffee() {
+            let priceVal = document.getElementById('pricePerKg').value.replace(/\./g, '');
+            let pricePerKg = parseFloat(priceVal) || 0;
 
             let ton = parseFloat(document.getElementById('inputTon').value) || 0;
             let ta = parseFloat(document.getElementById('inputTa').value) || 0;
@@ -293,12 +492,101 @@
             document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
         }
 
+        /* --- SCRIPT CHO TAB 2 (TÍNH TIỀN NHANH) --- */
+        function adjustInputFontSize(input) {
+            const len = input.value.length;
+            if (len > 10) input.style.fontSize = "10px";
+            else if (len > 7) input.style.fontSize = "12px";
+            else input.style.fontSize = "14px";
+        }
+
+        function addRow(price = "", qty = "") {
+            const container = document.getElementById("list-container");
+            const row = document.createElement("div");
+            row.className = "item-row";
+
+            row.innerHTML = `
+                <input type="text" class="price-input" value="${price ? formatNumber(price) : ''}" placeholder="0" oninput="onInputChanged(this)" inputmode="numeric">
+                <input type="text" class="qty-input" value="${qty ? formatNumber(qty) : ''}" placeholder="0" oninput="onInputChanged(this)" inputmode="numeric">
+                <div class="total-cell">0 VND</div>
+                <button class="btn-del" onclick="removeRow(this)">×</button>
+            `;
+            container.appendChild(row);
+            row.querySelectorAll("input").forEach(input => adjustInputFontSize(input));
+            calculateAll();
+        }
+
+        function removeRow(btn) {
+            btn.parentElement.remove();
+            calculateAll();
+        }
+
+        function onInputChanged(input) {
+            let rawVal = input.value.replace(/\D/g, "");
+            input.value = formatNumber(rawVal);
+            adjustInputFontSize(input);
+            calculateAll();
+        }
+
+        function calculateAll() {
+            const rows = document.querySelectorAll(".item-row");
+            let grandTotal = 0;
+
+            rows.forEach(row => {
+                const priceVal = parseFloat(row.querySelector(".price-input").value.replace(/\./g, "")) || 0;
+                const qtyVal = parseFloat(row.querySelector(".qty-input").value.replace(/\./g, "")) || 0;
+                const total = priceVal * qtyVal;
+
+                const totalCell = row.querySelector(".total-cell");
+                const totalText = formatNumber(total) + " VND";
+                totalCell.innerText = totalText;
+
+                if (totalText.length > 13) totalCell.style.fontSize = "9px";
+                else if (totalText.length > 10) totalCell.style.fontSize = "11px";
+                else totalCell.style.fontSize = "13px";
+
+                grandTotal += total;
+            });
+
+            document.getElementById("grand-total").innerText = formatNumber(grandTotal) + " VND";
+            document.getElementById("grand-total-words").innerText = docSo(grandTotal);
+        }
+
+        function copyContent() {
+            let textToCopy = "HÓA ĐƠN\n--------\n";
+            const rows = document.querySelectorAll(".item-row");
+            let index = 1;
+
+            rows.forEach(row => {
+                const p = row.querySelector(".price-input").value || "0";
+                const q = row.querySelector(".qty-input").value || "0";
+                const t = row.querySelector(".total-cell").innerText;
+                textToCopy += `${index}. Đơn giá: ${p} x Số lượng: ${q} = Thành tiền: ${t}\n`;
+                index++;
+            });
+
+            const grandTotalText = document.getElementById("grand-total").innerText;
+            const grandTotalWords = document.getElementById("grand-total-words").innerText;
+
+            textToCopy += `--------\nTổng tiền:\nBằng số: ${grandTotalText}\nBằng chữ: ${grandTotalWords}\n`;
+
+            const now = new Date();
+            textToCopy += `Thời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Đã sao chép thành công vào bộ nhớ tạm!");
+            }).catch(() => {
+                alert("Không thể sao chép tự động!");
+            });
+        }
+
         window.onload = function () {
             document.getElementById('pricePerKg').value = "";
             handlePriceInput(document.getElementById('pricePerKg'));
+            addRow();
+            addRow();
         };
     </script>
-
 </body>
 
 </html>
