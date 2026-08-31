@@ -35,6 +35,28 @@
             font-size: 24px;
         }
 
+        /* Khung hiển thị bảng giá nhanh */
+        .external-price-box {
+            background: #fff8e1;
+            border: 1px dashed #f39c12;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #d35400;
+            text-align: center;
+        }
+
+        .external-price-box a {
+            color: #2980b9;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .external-price-box a:hover {
+            text-decoration: underline;
+        }
+
         .form-group {
             margin-bottom: 16px;
         }
@@ -132,7 +154,13 @@
     <div class="container">
         <h2>GIÁ CÀ PHÊ</h2>
 
-        <!-- Nhập giá tiền mỗi kg: Dùng inputmode="numeric" để bật bàn phím số -->
+        <!-- Khung xem bảng giá trực tiếp từ nguồn ngoài -->
+        <div class="external-price-box">
+            📊 Cập nhật giá cà phê mới nhất:
+            <a href="https://giacaphe.com/gia-ca-phe-noi-dia/" target="_blank">Xem giá tại đây</a>
+        </div>
+
+        <!-- Nhập giá tiền mỗi kg -->
         <div class="form-group">
             <label for="pricePerKg">Giá tiền:</label>
             <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg"
