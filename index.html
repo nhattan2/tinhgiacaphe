@@ -94,7 +94,6 @@
             font-style: italic;
         }
 
-        /* Tối ưu cho màn hình điện thoại nhỏ */
         @media (max-width: 480px) {
             .container {
                 padding: 12px;
@@ -114,10 +113,10 @@
 <div class="container">
     <h2>GIÁ CÀ PHÊ</h2>
     
-    <!-- Nhập giá tiền mỗi kg -->
+    <!-- Nhập giá tiền mỗi kg: Dùng inputmode="numeric" để bật bàn phím số -->
     <div class="form-group">
         <label for="pricePerKg">Giá tiền:</label>
-        <input type="text" id="pricePerKg" placeholder="Giá mỗi kg Ví dụ: 95.300 vnđ" oninput="handlePriceInput(this)">
+        <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Ví dụ: 95300" oninput="handlePriceInput(this)">
         <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
     </div>
 
@@ -161,7 +160,6 @@
         return parseInt(cleanVal, 10).toLocaleString('vi-VN');
     }
 
-    // Hàm đọc số thành chữ tiếng Việt chuẩn
     function docSo(so) {
         if (isNaN(so) || so <= 0) return "Không đồng";
         const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
@@ -247,7 +245,6 @@
         document.getElementById('customResultWords').innerText = "Bằng chữ: " + docSo(totalMoney);
     }
 
-    // Chạy mặc định khi tải trang
     window.onload = function() {
         document.getElementById('pricePerKg').value = "";
         handlePriceInput(document.getElementById('pricePerKg'));
