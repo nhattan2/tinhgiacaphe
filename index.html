@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 14px; /* Đặt cỡ chữ cơ bản là 14px cho toàn web */
+            font-size: 14px;
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
@@ -46,8 +46,8 @@
 
         .tab-btn {
             flex: 1;
-            padding: 12px 6px;
-            font-size: 14px; /* Cỡ chữ tab 14px */
+            padding: 12px 4px;
+            font-size: 13px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
@@ -123,18 +123,19 @@
         }
 
         input,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #dcd0c0;
             border-radius: 6px;
-            font-size: 15px; /* Chữ trong ô nhập 15px cho rõ */
+            font-size: 15px;
             color: #2c221e;
             background-color: #fff;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #d35400;
             box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.15);
@@ -329,9 +330,26 @@
             transition: background 0.2s;
             box-shadow: 0 3px 8px rgba(142, 68, 173, 0.25);
         }
-
         .btn-copy:active {
             background: #6c3483;
+        }
+
+        .btn-excel {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.25);
+        }
+        .btn-excel:active {
+            background: #1e8449;
         }
 
         /* Tab 3: Đếm tiền */
@@ -428,10 +446,11 @@
 
     <!-- Thanh chuyển Tab -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('coffee')">☕ Cà Phê</button>
-        <button class="tab-btn" onclick="switchTab('fastcalc')">🧮 Tính Tiền</button>
-        <button class="tab-btn" onclick="switchTab('counting')">💵 Đếm Tiền</button>
-        <button class="tab-btn" onclick="switchTab('canca')">⚖️ Cân cà</button>
+        <button class="tab-btn active" onclick="switchTab('coffee')">Giá ☕</button>
+        <button class="tab-btn" onclick="switchTab('fastcalc')">Tính 💵</button>
+        <button class="tab-btn" onclick="switchTab('counting')">Đếm 💵</button>
+        <button class="tab-btn" onclick="switchTab('canca')">Cân ☕</button>
+        <button class="tab-btn" onclick="switchTab('converter')">Đổi 🔄</button>
     </div>
 
     <!-- TAB 1: GIÁ CÀ PHÊ -->
@@ -594,8 +613,25 @@
         </div>
     </div>
 
+    <!-- TAB 5: ĐỔI DẠNG EXCEL TỪ VĂN BẢN DÁN VÀO -->
+    <div id="tab-converter" class="tab-content">
+        <div class="container">
+            <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <label style="margin-bottom: 0;">Chuyển văn bản thành excel:</label>
+                    <div style="display: flex; gap: 6px;">
+                        <button onclick="pasteFromClipboard()" style="background: #2980b9; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">📋 Dán</button>
+                        <button onclick="clearText()" style="background: #e74c3c; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">🗑️ Xóa</button>
+                    </div>
+                </div>
+                <textarea id="rawTextPaste" rows="10" placeholder="Dán văn bản cân cà vào đây..." autocomplete="off" style="resize: vertical; font-family: monospace; font-size: 13px;"></textarea>
+            </div>
+            <button class="btn-excel" onclick="convertAndCopyForExcel()">Chuyển Đổi & Sao Chép</button>
+        </div>
+    </div>
+
     <!-- KHUNG THÔNG BÁO TOAST -->
-    <div id="toast-notification">✅ Đã sao chép vào bộ nhớ tạm!</div>
+    <div id="toast-notification">✅ Đã sao chép</div>
 
     <script>
         /* --- HÀM ĐỊNH DẠNG NGÀY GIỜ ĐẦY ĐỦ (DD/MM/YYYY) --- */
@@ -635,6 +671,9 @@
             } else if (tabName === 'canca') {
                 document.getElementById('tab-canca').classList.add('active');
                 document.querySelectorAll('.tab-btn')[3].classList.add('active');
+            } else if (tabName === 'converter') {
+                document.getElementById('tab-converter').classList.add('active');
+                document.querySelectorAll('.tab-btn')[4].classList.add('active');
             }
         }
 
@@ -1078,6 +1117,95 @@
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast("Đã sao chép báo cáo Cân Cà!");
+            }).catch(() => {
+                showToast("Không thể sao chép tự động!");
+            });
+        }
+
+        /* --- CÁC HÀM HỖ TRỢ TAB ĐỔI --- */
+        function pasteFromClipboard() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('rawTextPaste').value = text;
+                showToast("Đã dán nội dung từ bộ nhớ tạm!");
+            }).catch(err => {
+                showToast("Trình duyệt không cho phép đọc tự động, hãy bấm Ctrl+V!");
+            });
+        }
+
+        function clearText() {
+            document.getElementById('rawTextPaste').value = "";
+            showToast("Đã xóa nội dung!");
+        }
+
+        /* --- SCRIPT CHUYỂN ĐỔI VĂN BẢN DÁN THÀNH DẠNG EXCEL --- */
+        function convertAndCopyForExcel() {
+            let rawText = document.getElementById('rawTextPaste').value.trim();
+            if (!rawText) {
+                showToast("Vui lòng dán văn bản vào ô trước!");
+                return;
+            }
+
+            let lines = rawText.split('\n');
+            let chiTietCans = [];
+
+            let hoTen = "Chưa nhập tên";
+            let thoiGian = getFormattedDateTime();
+            let tongKg = "0";
+            let donGia = "0";
+            let thanhTien = "0";
+            let bangChu = "Không đồng";
+
+            lines.forEach(line => {
+                let trimmed = line.trim();
+                if (trimmed.includes("Họ và tên:")) {
+                    hoTen = trimmed.split("Họ và tên:")[1].trim();
+                } else if (trimmed.includes("Thời gian chốt:")) {
+                    thoiGian = trimmed.split("Thời gian chốt:")[1].trim();
+                } else if (trimmed.startsWith("Lần")) {
+                    let parts = trimmed.split(":");
+                    if (parts.length >= 2) {
+                        let stt = parts[0].trim();
+                        let kgVal = parts[1].replace("kg", "").trim();
+                        chiTietCans.push(`${stt}\t${kgVal}`);
+                    }
+                } else if (trimmed.includes("Tổng số kg:")) {
+                    tongKg = trimmed.split("Tổng số kg:")[1].replace("kg", "").trim();
+                } else if (trimmed.includes("Đơn giá:")) {
+                    donGia = trimmed.split("Đơn giá:")[1].replace("VNĐ/kg", "").trim();
+                } else if (trimmed.includes("Thành tiền:")) {
+                    thanhTien = trimmed.split("Thành tiền:")[1].replace("VNĐ", "").trim();
+                } else if (trimmed.includes("Bằng chữ:")) {
+                    bangChu = trimmed.split("Bằng chữ:")[1].replace(")", "").trim();
+                }
+            });
+
+            if (chiTietCans.length === 0) {
+                lines.forEach(line => {
+                    let trimmed = line.trim();
+                    if (!trimmed.includes("BẢNG KÊ") && !trimmed.includes("Họ và tên") && !trimmed.includes("Thời gian") && !trimmed.includes("Tổng số kg") && !trimmed.includes("Đơn giá") && !trimmed.includes("Thành tiền") && !trimmed.includes("Bằng chữ") && !trimmed.includes("---") && trimmed !== "") {
+                        chiTietCans.push(`Lần ${chiTietCans.length + 1}\t${trimmed.replace("kg", "").trim()}`);
+                    }
+                });
+            }
+
+            // Dựng cấu trúc chuẩn theo yêu cầu hình ảnh của bạn để khi dán vào Excel khớp từng ô chính xác
+            let excelOutput = `Họ và tên:\t${hoTen}\n`;
+            excelOutput += `Thời gian chốt:\t${thoiGian}\n\n`;
+            excelOutput += `STT\tSố Kg (kg)\n`;
+
+            if (chiTietCans.length > 0) {
+                excelOutput += chiTietCans.join('\n') + '\n';
+            } else {
+                excelOutput += `-\t0\n`;
+            }
+
+            excelOutput += `\nTổng số kg:\t${tongKg}\n`;
+            excelOutput += `Đơn giá (VNĐ/kg):\t${donGia}\n`;
+            excelOutput += `Thành tiền (VNĐ):\t${thanhTien}\n`;
+            excelOutput += `Bằng chữ:\t${bangChu}`;
+
+            navigator.clipboard.writeText(excelOutput).then(() => {
+                showToast("Đã chuyển đổi thành công! Mở Excel và dán (Ctrl+V)");
             }).catch(() => {
                 showToast("Không thể sao chép tự động!");
             });
