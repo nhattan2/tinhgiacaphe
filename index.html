@@ -12,11 +12,20 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px; /* Đặt cỡ chữ cơ bản là 14px cho toàn web */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: #faf7f2;
+            color: #2c221e;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -27,30 +36,33 @@
         /* Thanh điều hướng chuyển tab */
         .nav-tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             width: 100%;
             max-width: 750px;
             margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
 
         .tab-btn {
             flex: 1;
             padding: 12px 6px;
-            font-size: 14px;
+            font-size: 14px; /* Cỡ chữ tab 14px */
             font-weight: bold;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            background: #dfe4ea;
-            color: #57606f;
+            background: #e8ded2;
+            color: #6b5b52;
             transition: all 0.3s;
             text-align: center;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
-            background: #2ed573;
+            background: #d35400;
             color: white;
-            box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
+            box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
         }
 
         /* Khu vực chứa các tab */
@@ -69,9 +81,11 @@
             background: #fff;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(44, 34, 30, 0.08);
             width: 100%;
             box-sizing: border-box;
+            margin-bottom: 20px;
+            border: 1px solid #f0e6dc;
         }
 
         /* Tab 1: Giá cà phê */
@@ -82,7 +96,7 @@
             border-radius: 6px;
             margin-bottom: 16px;
             font-size: 14px;
-            color: #d35400;
+            color: #b7410e;
             text-align: center;
         }
 
@@ -104,23 +118,31 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #34495e;
+            color: #4a3b32;
             font-size: 14px;
         }
 
         input,
         select {
             width: 100%;
-            padding: 9px;
+            padding: 10px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 15px;
+            border: 1px solid #dcd0c0;
+            border-radius: 6px;
+            font-size: 15px; /* Chữ trong ô nhập 15px cho rõ */
+            color: #2c221e;
+            background-color: #fff;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d35400;
+            box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.15);
         }
 
         .spell-text {
             font-style: italic;
-            color: #e67e22;
+            color: #c0392b;
             font-size: 13px;
             margin-top: 4px;
         }
@@ -134,7 +156,7 @@
         .combo-box label {
             font-size: 13px;
             font-weight: normal;
-            color: #666;
+            color: #6b5b52;
             margin-bottom: 3px;
             text-align: center;
         }
@@ -146,20 +168,20 @@
 
         .result-box {
             margin-top: 16px;
-            background: #f8f9fa;
-            border: 1px solid #e1e2e6;
-            padding: 12px;
+            background: #fdfaf6;
+            border: 1px solid #f0e6dc;
+            padding: 14px;
             border-radius: 8px;
         }
 
         .custom-result {
             font-size: 15px;
-            color: #d35400;
+            color: #b7410e;
             font-weight: bold;
         }
 
         .spell-money {
-            font-size: 13px;
+            font-size: 14px;
             color: #27ae60;
             margin-top: 4px;
             font-style: italic;
@@ -168,9 +190,9 @@
         .extra-analysis {
             margin-top: 10px;
             padding-top: 8px;
-            border-top: 1px dashed #dcdde1;
-            font-size: 13px;
-            color: #2f3640;
+            border-top: 1px dashed #e8ded2;
+            font-size: 14px;
+            color: #4a3b32;
         }
 
         .extra-analysis div {
@@ -181,19 +203,19 @@
             width: 100%;
             margin-top: 6px;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .breakdown-table th,
         .breakdown-table td {
-            border: 1px solid #dcdde1;
-            padding: 5px 8px;
+            border: 1px solid #e8ded2;
+            padding: 8px;
             text-align: center;
         }
 
         .breakdown-table th {
-            background-color: #f1f2f6;
-            color: #2c3e50;
+            background-color: #f4ede4;
+            color: #4a3b32;
         }
 
         /* Tab 2: Tính tiền nhanh */
@@ -202,8 +224,8 @@
             grid-template-columns: 2fr 1.3fr 2.6fr 36px;
             gap: 6px;
             font-weight: bold;
-            font-size: 13px;
-            color: #7f8c8d;
+            font-size: 14px;
+            color: #7f6e62;
             margin-bottom: 8px;
             text-align: center;
         }
@@ -218,38 +240,35 @@
 
         .item-row input {
             text-align: right;
-            padding: 10px 4px;
-            font-size: 14px;
+            padding: 10px 6px;
+            font-size: 15px;
             border-radius: 8px;
         }
 
         .total-cell {
-            background: #f1f2f6;
-            padding: 10px 4px;
+            background: #fdfaf6;
+            border: 1px solid #dcd0c0;
+            padding: 10px 6px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             text-align: right;
-            color: #2f3640;
+            color: #b7410e;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            min-height: 43px;
+            min-height: 45px;
             white-space: nowrap;
             overflow-x: auto;
         }
 
-        .total-cell::-webkit-scrollbar {
-            display: none;
-        }
-
         .btn-del {
-            background: #ff4757;
+            background: #e74c3c;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            height: 43px;
+            height: 45px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -257,7 +276,7 @@
         }
 
         .btn-add {
-            background: #2ed573;
+            background: #d35400;
             color: white;
             border: none;
             border-radius: 8px;
@@ -268,13 +287,14 @@
             cursor: pointer;
             margin-top: 8px;
             margin-bottom: 16px;
+            box-shadow: 0 2px 5px rgba(211, 84, 0, 0.2);
         }
 
         .summary-box {
-            background: #f8f9fa;
-            border: 1px solid #dcdde1;
+            background: #fdfaf6;
+            border: 1px solid #f0e6dc;
             border-radius: 10px;
-            padding: 12px;
+            padding: 14px;
             margin-top: 16px;
         }
 
@@ -285,17 +305,18 @@
             font-size: 15px;
             font-weight: bold;
             margin-bottom: 6px;
+            color: #4a3b32;
         }
 
         .summary-words {
-            font-size: 13px;
-            color: #57606f;
+            font-size: 14px;
+            color: #7f6e62;
             font-style: italic;
             text-align: right;
         }
 
         .btn-copy {
-            background: #3742fa;
+            background: #8e44ad;
             color: white;
             border: none;
             border-radius: 8px;
@@ -306,10 +327,11 @@
             cursor: pointer;
             margin-top: 12px;
             transition: background 0.2s;
+            box-shadow: 0 3px 8px rgba(142, 68, 173, 0.25);
         }
 
         .btn-copy:active {
-            background: #2f3542;
+            background: #6c3483;
         }
 
         /* Tab 3: Đếm tiền */
@@ -317,19 +339,20 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 16px;
+            font-size: 14px;
         }
 
         .money-table th,
         .money-table td {
-            border: 1px solid #dfe4ea;
-            padding: 10px 8px;
+            border: 1px solid #e8ded2;
+            padding: 10px;
             text-align: center;
             vertical-align: middle;
         }
 
         .money-table th {
-            background-color: #f1f2f6;
-            color: #2c3e50;
+            background-color: #f4ede4;
+            color: #4a3b32;
             font-size: 14px;
         }
 
@@ -337,17 +360,42 @@
             text-align: center;
             font-size: 16px;
             font-weight: bold;
-            color: #2f3640;
+            color: #2c221e;
             padding: 8px;
         }
 
-        /* --- TOAST NOTIFICATION THAY CHO ALERT THÔ --- */
+        /* Tab 4: Cân cà */
+        .can-ca-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .can-ca-table th, .can-ca-table td {
+            border: 1px solid #e8ded2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .can-ca-table th {
+            background-color: #d35400;
+            color: white;
+            font-size: 14px;
+        }
+
+        .can-ca-table td input {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        /* --- TOAST NOTIFICATION --- */
         #toast-notification {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(47, 53, 66, 0.95);
+            background: rgba(44, 34, 30, 0.95);
             color: white;
             padding: 12px 24px;
             border-radius: 30px;
@@ -370,7 +418,7 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: 10px;
+                padding: 12px;
             }
         }
     </style>
@@ -383,6 +431,7 @@
         <button class="tab-btn active" onclick="switchTab('coffee')">☕ Cà Phê</button>
         <button class="tab-btn" onclick="switchTab('fastcalc')">🧮 Tính Tiền</button>
         <button class="tab-btn" onclick="switchTab('counting')">💵 Đếm Tiền</button>
+        <button class="tab-btn" onclick="switchTab('canca')">⚖️ Cân cà</button>
     </div>
 
     <!-- TAB 1: GIÁ CÀ PHÊ -->
@@ -396,7 +445,7 @@
 
             <div class="form-group">
                 <label for="pricePerKg">Giá tiền:</label>
-                <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg"
+                <input type="text" id="pricePerKg" inputmode="numeric" placeholder="Giá tiền / kg" autocomplete="off"
                     oninput="handlePriceInput(this)">
                 <div class="spell-text" id="priceInWords">Bằng chữ: Không đồng</div>
             </div>
@@ -406,15 +455,15 @@
                 <div class="combo-group">
                     <div class="combo-box">
                         <label>Tấn</label>
-                        <input type="number" id="inputTon" value="" min="0" placeholder="9" oninput="calculateCoffee()">
+                        <input type="number" id="inputTon" value="" min="0" placeholder="9" autocomplete="off" oninput="calculateCoffee()">
                     </div>
                     <div class="combo-box">
                         <label>Tạ</label>
-                        <input type="number" id="inputTa" value="" min="0" placeholder="4" oninput="calculateCoffee()">
+                        <input type="number" id="inputTa" value="" min="0" placeholder="4" autocomplete="off" oninput="calculateCoffee()">
                     </div>
                     <div class="combo-box">
                         <label>Kg</label>
-                        <input type="number" id="inputKg" value="" min="0" placeholder="30" oninput="calculateCoffee()">
+                        <input type="number" id="inputKg" value="" min="0" placeholder="30" autocomplete="off" oninput="calculateCoffee()">
                     </div>
                 </div>
             </div>
@@ -498,10 +547,67 @@
         </div>
     </div>
 
-    <!-- KHUNG THÔNG BÁO TOAST (THAY THẾ ALERT) -->
+    <!-- TAB 4: CÂN CÀ -->
+    <div id="tab-canca" class="tab-content">
+        <div class="container">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Họ và tên:</label>
+                    <input type="text" id="canCaTen" placeholder="Nhập tên..." autocomplete="off">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Đơn Giá (VNĐ / kg):</label>
+                    <input type="text" id="canCaDonGia" placeholder="Nhập đơn giá..." autocomplete="off" oninput="handleCanCaPriceInput(this)" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <table class="can-ca-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">STT</th>
+                            <th>Số Kg (kg)</th>
+                            <th style="width: 60px;">Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="canCaDanhSach">
+                        <!-- Thêm dòng động -->
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn-add" onclick="themDongCanCa()">+ Thêm dòng cân</button>
+
+            <div class="summary-box" style="margin-top: 10px;">
+                <div class="summary-line">
+                    <span>Tổng Số Kg:</span>
+                    <span id="canCaTongKg">0.0 kg</span>
+                </div>
+                <div class="summary-line">
+                    <span>Thành Tiền:</span>
+                    <span id="canCaThanhTienSo" style="color: #b7410e;">0 VNĐ</span>
+                </div>
+                <div class="summary-words" id="canCaThanhTienChu">Không đồng</div>
+            </div>
+
+            <button class="btn-copy" onclick="copyCanCaContent()">📋 Sao Chép</button>
+        </div>
+    </div>
+
+    <!-- KHUNG THÔNG BÁO TOAST -->
     <div id="toast-notification">✅ Đã sao chép vào bộ nhớ tạm!</div>
 
     <script>
+        /* --- HÀM ĐỊNH DẠNG NGÀY GIỜ ĐẦY ĐỦ (DD/MM/YYYY) --- */
+        function getFormattedDateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            return `${timeStr} - ${day}/${month}/${year}`;
+        }
+
         /* --- HÀM HIỂN THỊ TOAST MƯỢT MÀ --- */
         function showToast(message) {
             const toast = document.getElementById('toast-notification');
@@ -526,10 +632,13 @@
             } else if (tabName === 'counting') {
                 document.getElementById('tab-counting').classList.add('active');
                 document.querySelectorAll('.tab-btn')[2].classList.add('active');
+            } else if (tabName === 'canca') {
+                document.getElementById('tab-canca').classList.add('active');
+                document.querySelectorAll('.tab-btn')[3].classList.add('active');
             }
         }
 
-        /* --- HÀM ĐỌC SỐ MỞ RỘNG (HỖ TRỢ MỌI SỐ CỰC LỚN) --- */
+        /* --- HÀM ĐỌC SỐ MỞ RỘNG --- */
         function docSo(so) {
             if (isNaN(so) || so <= 0) return "Không đồng";
             const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
@@ -608,7 +717,7 @@
             return Number(num).toLocaleString('vi-VN');
         }
 
-        /* --- SCRIPT CHO TAB 1 (GIÁ CÀ PHÊ) --- */
+        /* --- SCRIPT CHO TAB 1 --- */
         function handlePriceInput(input) {
             let cleanVal = input.value.replace(/\D/g, '');
             input.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('vi-VN') : '';
@@ -694,8 +803,7 @@
                 });
             }
 
-            const now = new Date();
-            textToCopy += `\nThời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+            textToCopy += `\nThời gian: ${getFormattedDateTime()}`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast("Đã sao chép nội dung Cà Phê!");
@@ -704,20 +812,24 @@
             });
         }
 
-        /* --- SCRIPT CHO TAB 2 (TÍNH TIỀN NHANH) --- */
+        /* --- SCRIPT CHO TAB 2 --- */
         function addRow(price = "", qty = "") {
             const container = document.getElementById("list-container");
             const row = document.createElement("div");
             row.className = "item-row";
 
             row.innerHTML = `
-                <input type="text" class="price-input" value="${price ? formatNumber(price) : ''}" placeholder="0" oninput="onInputChanged(this)" inputmode="numeric">
-                <input type="text" class="qty-input" value="${qty ? formatNumber(qty) : ''}" placeholder="0" oninput="onInputChanged(this)" inputmode="numeric">
+                <input type="text" class="price-input" value="${price ? formatNumber(price) : ''}" placeholder="0" autocomplete="off" oninput="onInputChanged(this)" inputmode="numeric">
+                <input type="text" class="qty-input" value="${qty ? formatNumber(qty) : ''}" placeholder="0" autocomplete="off" oninput="onInputChanged(this)" inputmode="numeric">
                 <div class="total-cell">0 VND</div>
                 <button class="btn-del" onclick="removeRow(this)">×</button>
             `;
             container.appendChild(row);
             calculateAll();
+
+            const lastInput = row.querySelector(".price-input");
+            lastInput.focus();
+            lastInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function removeRow(btn) {
@@ -768,9 +880,7 @@
 
             textToCopy += `-------------------------\n`;
             textToCopy += `Tổng tiền:\nBằng số: ${grandTotalText}\nBằng chữ: ${grandTotalWords}\n`;
-
-            const now = new Date();
-            textToCopy += `Thời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+            textToCopy += `Thời gian: ${getFormattedDateTime()}`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast("Đã sao chép hóa đơn thành công!");
@@ -779,7 +889,7 @@
             });
         }
 
-        /* --- SCRIPT CHO TAB 3 (ĐẾM TIỀN) --- */
+        /* --- SCRIPT CHO TAB 3 --- */
         const moneyDenominations = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000];
 
         function initMoneyCounting() {
@@ -789,11 +899,11 @@
             moneyDenominations.forEach((denom, index) => {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="font-weight: bold; color: #2c3e50;">${denom.toLocaleString('vi-VN')} đ</td>
+                    <td style="font-weight: bold; color: #4a3b32;">${denom.toLocaleString('vi-VN')} đ</td>
                     <td>
-                        <input type="text" class="money-qty-input" data-denom="${denom}" value="" placeholder="0" oninput="onMoneyInputChanged(this)" inputmode="numeric">
+                        <input type="text" class="money-qty-input" data-denom="${denom}" value="" placeholder="0" autocomplete="off" oninput="onMoneyInputChanged(this)" inputmode="numeric">
                     </td>
-                    <td class="money-row-total" style="font-weight: bold; color: #d35400; text-align: right;">0 đ</td>
+                    <td class="money-row-total" style="font-weight: bold; color: #b7410e; text-align: right;">0 đ</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -843,12 +953,131 @@
             textToCopy += `---------------------------------\n`;
             textToCopy += `Tổng cộng số tiền: ${grandTotalText}\n`;
             textToCopy += `Bằng chữ: ${grandTotalWords}\n`;
-
-            const now = new Date();
-            textToCopy += `Thời gian: ${now.toLocaleTimeString('vi-VN')} - ${now.toLocaleDateString('vi-VN')}`;
+            textToCopy += `Thời gian: ${getFormattedDateTime()}`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast("Đã sao chép bảng đếm tiền!");
+            }).catch(() => {
+                showToast("Không thể sao chép tự động!");
+            });
+        }
+
+        /* --- SCRIPT CHO TAB 4 (CÂN CÀ) --- */
+        function handleCanCaPriceInput(input) {
+            let cleanVal = input.value.replace(/\D/g, '');
+            input.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('vi-VN') : '';
+            tinhToanCanCa();
+        }
+
+        function themDongCanCa() {
+            const tbody = document.getElementById('canCaDanhSach');
+            const rowCount = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-gray-50 transition";
+            tr.innerHTML = `
+                <td class="font-semibold text-gray-700 canca-stt">${rowCount}</td>
+                <td>
+                    <input type="number" inputmode="decimal" step="0.1" min="0" placeholder="Nhập số kg..." autocomplete="off" oninput="kiemTraVaTinhCanCa(this)" 
+                        class="canca-kg-input w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-base">
+                </td>
+                <td>
+                    <button onclick="xoaDongCanCa(this)" class="bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-2 rounded-lg text-xs font-bold transition">✕</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            capNhatSttCanCa();
+
+            const inputs = tbody.querySelectorAll('.canca-kg-input');
+            const lastInput = inputs[inputs.length - 1];
+            lastInput.focus();
+            lastInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function kiemTraVaTinhCanCa(input) {
+            if (input.value < 0) {
+                input.value = 0;
+            }
+            tinhToanCanCa();
+        }
+
+        function xoaDongCanCa(button) {
+            const row = button.closest('tr');
+            row.remove();
+            capNhatSttCanCa();
+            tinhToanCanCa();
+        }
+
+        function capNhatSttCanCa() {
+            const rows = document.querySelectorAll('#canCaDanhSach tr');
+            rows.forEach((row, index) => {
+                row.querySelector('.canca-stt').innerText = index + 1;
+            });
+        }
+
+        function tinhToanCanCa() {
+            const inputs = document.querySelectorAll('.canca-kg-input');
+            let tongKg = 0;
+            inputs.forEach(input => {
+                let val = parseFloat(input.value);
+                if (!isNaN(val) && val > 0) {
+                    tongKg += val;
+                }
+            });
+
+            const donGiaVal = document.getElementById('canCaDonGia').value.replace(/\./g, '');
+            const donGia = parseFloat(donGiaVal) || 0;
+            const thanhTien = Math.round(tongKg * donGia);
+
+            document.getElementById('canCaTongKg').innerText = (Math.round(tongKg * 10) / 10) + ' kg';
+            document.getElementById('canCaThanhTienSo').innerText = formatNumber(thanhTien) + ' VNĐ';
+            document.getElementById('canCaThanhTienChu').innerText = docSo(thanhTien);
+        }
+
+        function copyCanCaContent() {
+            const ten = document.getElementById('canCaTen').value.trim() || "Chưa nhập tên";
+            const donGiaStr = document.getElementById('canCaDonGia').value || "0";
+            const donGiaVal = donGiaStr.replace(/\./g, '');
+            const donGia = parseFloat(donGiaVal) || 0;
+            const rows = document.querySelectorAll('#canCaDanhSach tr');
+
+            let chiTietList = [];
+            let tongKg = 0;
+            let sttHienThi = 1;
+
+            rows.forEach((row) => {
+                const kgVal = row.querySelector('.canca-kg-input').value;
+                const kg = parseFloat(kgVal);
+                if (!isNaN(kg) && kg > 0) {
+                    chiTietList.push(`Lần ${sttHienThi}: ${kg} kg`);
+                    tongKg += kg;
+                    sttHienThi++;
+                }
+            });
+
+            const thanhTien = Math.round(tongKg * donGia);
+
+            let textToCopy = `📋 BẢNG KÊ CÂN CÀ PHÊ\n`;
+            textToCopy += `----------------------------------\n`;
+            textToCopy += `👤 Họ và tên: ${ten}\n`;
+            textToCopy += `⏰ Thời gian chốt: ${getFormattedDateTime()}\n`;
+            textToCopy += `----------------------------------\n`;
+            textToCopy += `Chi tiết các lần cân:\n`;
+
+            if (chiTietList.length > 0) {
+                textToCopy += chiTietList.join('\n') + '\n';
+            } else {
+                textToCopy += `(Chưa có lần cân nào > 0)\n`;
+            }
+
+            textToCopy += `----------------------------------\n`;
+            textToCopy += `👉 Tổng số kg: ${(Math.round(tongKg * 10) / 10)} kg\n`;
+            textToCopy += `💰 Đơn giá: ${donGiaStr} VNĐ/kg\n`;
+            textToCopy += `💵 Thành tiền: ${formatNumber(thanhTien)} VNĐ\n`;
+            textToCopy += `(Bằng chữ: ${docSo(thanhTien)})`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast("Đã sao chép báo cáo Cân Cà!");
             }).catch(() => {
                 showToast("Không thể sao chép tự động!");
             });
@@ -860,6 +1089,7 @@
             addRow();
             addRow();
             initMoneyCounting();
+            themDongCanCa();
         };
     </script>
 </body>
