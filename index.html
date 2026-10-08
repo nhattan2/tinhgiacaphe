@@ -423,7 +423,7 @@
             color: white;
         }
 
-        /* TAB 6: TÍNH CÔNG (Full màn hình, cuộn riêng phát sinh) */
+        /* TAB 6: TÍNH CÔNG */
         .tinhcong-wrapper {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -888,7 +888,7 @@
                         </div>
                         <div class="tc-group">
                             <label class="tc-label" for="mealsPerDay">Số bữa/ngày:</label>
-                            <input type="number" id="mealsPerDay" class="tc-input" inputmode="numeric" placeholder="VD: 3" value="" autocomplete="off" oninput="calculateFinance()">
+                            <input type="number" id="mealsPerDay" class="tc-input" inputmode="numeric" placeholder="VD: 3" value="3" autocomplete="off" oninput="calculateFinance()">
                         </div>
                         <div class="tc-group">
                             <label class="tc-label" for="workDays">Số ngày làm:</label>
@@ -1587,11 +1587,18 @@
         let lastResultText = "";
 
         function calculateFinance() {
-            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+            const monthlySalaryStr = document.getElementById('monthlySalary').value || "0";
+            const dailySalaryStr = document.getElementById('dailySalaryInput').value || "0";
+            const bonusSalaryStr = document.getElementById('bonusSalary').value || "0";
+            const mealPriceStr = document.getElementById('mealPrice').value || "0";
+            const mealsPerDay = document.getElementById('mealsPerDay').value || "0";
+            const workDays = document.getElementById('workDays').value || "0";
+
+            const workDaysNum = parseFloat(workDays) || 0;
 
             if (activeInputMode === 'daily') {
-                let dailyVal = getRawValue(document.getElementById('dailySalaryInput').value);
-                let calculatedMonthly = dailyVal * workDays;
+                let dailyVal = getRawValue(dailySalaryStr);
+                let calculatedMonthly = dailyVal * workDaysNum;
                 document.getElementById('monthlySalary').value = calculatedMonthly > 0 ? calculatedMonthly.toLocaleString('vi-VN') : "";
             }
 
@@ -1600,10 +1607,10 @@
             const totalIncome = baseSalary + bonusSalary;
 
             const mealPrice = getRawValue(document.getElementById('mealPrice').value);
-            const mealsPerDay = parseFloat(document.getElementById('mealsPerDay').value) || 0;
-            const totalFood = mealPrice * mealsPerDay * workDays;
+            const mealsPerDayNum = parseFloat(mealsPerDay) || 0;
+            const totalFood = mealPrice * mealsPerDayNum * workDaysNum;
 
-            document.getElementById('labelTotalFood').innerText = `${formatCurrency(mealPrice)} × ${mealsPerDay} bữa × ${workDays} ngày`;
+            document.getElementById('labelTotalFood').innerText = `${formatCurrency(mealPrice)} × ${mealsPerDayNum} bữa × ${workDaysNum} ngày`;
 
             let totalOther = 0;
             let expenseDetails = [];
@@ -1615,13 +1622,13 @@
                 const val = getRawValue(valInput.value);
                 if (val > 0) {
                     totalOther += val;
-                    expenseDetails.push(`- ${name}: ${formatCurrency(val)}`);
+                    expenseDetails.push(`  + ${name}: ${formatCurrency(val)}`);
                 }
             });
 
             const netProfit = totalIncome - (totalFood + totalOther);
-            const salaryPerDay = workDays > 0 ? totalIncome / workDays : 0;
-            const profitPerDay = workDays > 0 ? netProfit / workDays : 0;
+            const salaryPerDay = workDaysNum > 0 ? totalIncome / workDaysNum : 0;
+            const profitPerDay = workDaysNum > 0 ? netProfit / workDaysNum : 0;
 
             document.getElementById('resTotalIncome').innerText = formatCurrency(totalIncome);
             document.getElementById('resTotalFood').innerText = formatCurrency(totalFood);
@@ -1635,28 +1642,42 @@
             document.getElementById('wordsTotalOther').innerText = docSo(totalOther);
             document.getElementById('wordsNetProfit').innerText = docSo(netProfit);
 
+            // Xây dựng nội dung chi tiết sao chép bao gồm cả phần nhập và phần kết quả
+            let salaryInputTypeDisplay = activeInputMode === 'daily' ? `Lương ngày: ${dailySalaryStr} VNĐ/ngày` : `Lương tháng: ${monthlySalaryStr} VNĐ`;
+
             lastResultText = 
-`📊 BẢNG TÍNH THU NHẬP & TÀI CHÍNH THÁNG
+`📊 BẢNG TÍNH LƯƠNG & TÀI CHÍNH THÁNG
 -----------------------------------
-💰 Tổng thu nhập (Lương + Thưởng): ${formatCurrency(totalIncome)}
-(-) Tiền ăn uống: ${formatCurrency(totalFood)}
-(-) Tổng chi phí phát sinh: ${formatCurrency(totalOther)}
-${expenseDetails.join('\n')}
+📥 THÔNG TIN NHẬP LIỆU:
+• ${salaryInputTypeDisplay}
+• Thưởng / Phụ cấp: ${bonusSalaryStr || '0'} VNĐ
+• Ngày công: ${workDays || '0'} ngày
+• Tiền ăn: ${mealPriceStr || '0'} VNĐ/bữa (${mealsPerDay || '0'} bữa/ngày)
+• Chi phí phát sinh:
+${expenseDetails.length > 0 ? expenseDetails.join('\n') : '  (Không có)'}
+
 -----------------------------------
-💵 TIỀN LÃI RÒNG CÒN LẠI: ${formatCurrency(netProfit)}
+📐 KẾT QUẢ TÍNH TOÁN:
+💰 Tổng thu nhập (Lương + Thưởng): ${formatCurrency(totalIncome)} (${docSo(totalIncome)})
+(-) Tiền ăn uống: ${formatCurrency(totalFood)} (${docSo(totalFood)})
+(-) Tổng chi phí phát sinh: ${formatCurrency(totalOther)} (${docSo(totalOther)})
 -----------------------------------
-📌 QUY ĐỔI THEO NGÀY CÔNG (${workDays} ngày làm):
+💵 TIỀN LÃI RÒNG CÒN LẠI: ${formatCurrency(netProfit)} (${docSo(netProfit)})
+-----------------------------------
+📌 QUY ĐỔI THEO NGÀY CÔNG (${workDaysNum} ngày làm):
 • Lương tổng / 1 ngày: ${formatCurrency(salaryPerDay)}
-• Lãi ròng / 1 ngày: ${formatCurrency(profitPerDay)}`;
+• Lãi ròng / 1 ngày: ${formatCurrency(profitPerDay)}
+⏰ Thời gian: ${getFormattedDateTime()}`;
         }
 
         function copyResults() {
+            calculateFinance(); // Đảm bảo dữ liệu mới nhất được cập nhật vào biến
             if (!lastResultText) {
                 showToast("Chưa có dữ liệu để sao chép!");
                 return;
             }
             navigator.clipboard.writeText(lastResultText).then(() => {
-                showToast("Đã sao chép kết quả báo cáo!");
+                showToast("Đã sao chép toàn bộ chi tiết và kết quả!");
             }).catch(() => {
                 showToast("Không thể sao chép tự động!");
             });
