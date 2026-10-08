@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Lương</title>
+    <link rel="icon" href="logo.png" />
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --success: #059669;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-light: #475569;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            /* Chặn bôi đen toàn bộ trang */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Cho phép bôi đen/nhập liệu bên trong các ô input để người dùng nhập số liệu */
+        input {
+            user-select: text !important;
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 8px;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            overflow: hidden;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            height: 100%;
+            background: var(--card);
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 16px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                overflow: auto;
+            }
+
+            .grid-layout {
+                grid-template-columns: 1fr;
+                overflow: visible;
+            }
+
+            .main-wrapper {
+                height: auto;
+            }
+        }
+
+        .column-box {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .column-box.result-box {
+            background: #ffffff;
+            border: 2px solid var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 10px 0 6px 0;
+            color: var(--primary-dark);
+            border-left: 4px solid var(--primary);
+            padding-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.2s;
+            background: #fff;
+            color: var(--text);
+            text-align: center;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+            opacity: 1;
+        }
+
+        input.currency-input {
+            font-weight: 700;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .expense-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 8px;
+            min-height: 50px;
+        }
+
+        .expense-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .expense-scroll-container::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+
+        .expense-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .expense-row input.name-input {
+            flex: 1.5;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .expense-row input.currency-input {
+            flex: 1.5;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .btn-icon {
+            background-color: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-icon:hover {
+            background-color: #fecaca;
+        }
+
+        .btn-secondary {
+            background-color: #e0f2fe;
+            color: var(--primary-dark);
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-secondary:hover {
+            background-color: #bae6fd;
+        }
+
+        .calc-sheet {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .sheet-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .sheet-row span,
+        .sheet-row strong {
+            flex: 1;
+            text-align: center;
+        }
+
+        .sheet-row span:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .sheet-row strong:last-child {
+            text-align: right;
+            font-size: 1.15rem;
+        }
+
+        .sheet-row.operator {
+            color: #d97706;
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 2px 0;
+            border-bottom: none;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .sheet-row.total-highlight {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--success);
+            border-top: 2.5px solid var(--border);
+            margin-top: 4px;
+            padding-top: 8px;
+        }
+
+        .sub-words {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background-color: #047857;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <h2>Bảng Tính Lương</h2>
+
+        <div class="grid-layout">
+            <!-- CỘT TRÁI: NHẬP LIỆU -->
+            <div class="column-box">
+                <div class="section-title">Thu Nhập </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="baseSalary">Lương cơ bản (VNĐ):</label>
+                        <input type="text" id="baseSalary" class="currency-input" inputmode="numeric"
+                            placeholder="VD: 7.000.000" autocomplete="off" oninput="formatInput(this)">
+                    </div>
+                    <div class="form-group">
+                        <label for="bonusSalary">Thưởng / Phụ cấp (VNĐ):</label>
+                        <input type="text" id="bonusSalary" class="currency-input" inputmode="numeric"
+                            placeholder="VD: 500.000" autocomplete="off" oninput="formatInput(this)">
+                    </div>
+                </div>
+
+                <div class="section-title">Chi Phí Ăn Uống</div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="mealPrice">Tiền ăn 1 bữa:</label>
+                        <input type="text" id="mealPrice" class="currency-input" inputmode="numeric"
+                            placeholder="VD: 35.000" autocomplete="off" oninput="formatInput(this)">
+                    </div>
+                    <div class="form-group">
+                        <label for="mealsPerDay">Số bữa/ngày:</label>
+                        <input type="number" id="mealsPerDay" inputmode="numeric" placeholder="VD: 3" value="3"
+                            autocomplete="off" oninput="calculateFinance()">
+                    </div>
+                    <div class="form-group">
+                        <label for="workDays">Số ngày làm:</label>
+                        <input type="number" id="workDays" inputmode="numeric" placeholder="VD: 26" autocomplete="off"
+                            oninput="calculateFinance()">
+                    </div>
+                </div>
+
+                <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Chi Phí Phát Sinh</span>
+                    <button type="button" class="btn-secondary" onclick="addExpenseRow()">+ Thêm khoản</button>
+                </div>
+
+                <div class="expense-scroll-container" id="expenseListContainer">
+                    <div class="expense-row">
+                        <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                        <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền"
+                            autocomplete="off" oninput="formatInput(this)">
+                        <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+                    </div>
+                    <div class="expense-row">
+                        <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                        <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền"
+                            autocomplete="off" oninput="formatInput(this)">
+                        <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+                    </div>
+                    <div class="expense-row">
+                        <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                        <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền"
+                            autocomplete="off" oninput="formatInput(this)">
+                        <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: KẾT QUẢ -->
+            <div class="column-box result-box">
+                <div class="section-title" style="margin-top: 0; color: var(--primary-dark); text-align: center;">Kết
+                    Quả</div>
+
+                <div class="calc-sheet">
+                    <div>
+                        <div class="sheet-row">
+                            <span>Tổng thu nhập:</span>
+                            <strong id="resTotalIncome">0 đ</strong>
+                        </div>
+                        <div class="sub-words" id="wordsTotalIncome">Không đồng</div>
+                    </div>
+
+                    <div class="sheet-row operator">(-) Tiền ăn uống:</div>
+                    <div>
+                        <div class="sheet-row">
+                            <span style="color: var(--text-light); text-align: center; font-size: 0.95rem;"
+                                id="labelTotalFood">Chi tiết ăn: 0 đ</span>
+                            <strong id="resTotalFood">0 đ</strong>
+                        </div>
+                        <div class="sub-words" id="wordsTotalFood">Không đồng</div>
+                    </div>
+
+                    <div class="sheet-row operator">(-) Chi phí phát sinh:</div>
+                    <div>
+                        <div class="sheet-row">
+                            <span style="color: var(--text-light); text-align: center; font-size: 0.95rem;">Tổng các
+                                khoản phát sinh</span>
+                            <strong id="resTotalOther">0 đ</strong>
+                        </div>
+                        <div class="sub-words" id="wordsTotalOther">Không đồng</div>
+                    </div>
+
+                    <div class="sheet-row total-highlight">
+                        <span>LÃI RÒNG CÒN LẠI:</span>
+                        <span id="resNetProfit">0 đ</span>
+                    </div>
+                    <div class="sub-words" id="wordsNetProfit"
+                        style="font-weight: bold; color: var(--success); font-size: 0.9rem;">Không đồng</div>
+
+                    <hr style="border: 0; border-top: 1.5px dashed var(--border); margin: 6px 0;">
+
+                    <div class="sheet-row">
+                        <span>Lương tổng / 1 ngày làm:</span>
+                        <strong id="resSalaryPerDay">0 đ</strong>
+                    </div>
+                    <div class="sheet-row" style="color: var(--success); font-weight: bold;">
+                        <span>Lãi ròng / 1 ngày làm:</span>
+                        <strong id="resProfitPerDay">0 đ</strong>
+                    </div>
+                </div>
+
+                <button class="copy-btn" onclick="copyResults()">
+                    📋 Sao chép
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chặn click chuột phải
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Chặn các phím tắt mở F12, Inspect, View Source, Save Page
+        document.addEventListener('keydown', function (e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 'S')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        function formatInput(input) {
+            let cursorPosition = input.selectionStart;
+            let oldLength = input.value.length;
+            let value = input.value.replace(/\D/g, "");
+            if (value === "") {
+                input.value = "";
+                calculateFinance();
+                return;
+            }
+            input.value = Number(value).toLocaleString('vi-VN');
+            let newLength = input.value.length;
+            cursorPosition = cursorPosition + (newLength - oldLength);
+            input.setSelectionRange(cursorPosition, cursorPosition);
+            calculateFinance();
+        }
+
+        function getRawValue(val) {
+            if (!val) return 0;
+            return parseFloat(val.toString().replace(/\./g, "")) || 0;
+        }
+
+        function addExpenseRow() {
+            const container = document.getElementById('expenseListContainer');
+            const row = document.createElement('div');
+            row.className = 'expense-row';
+            row.innerHTML = `
+                <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+            `;
+            container.appendChild(row);
+            calculateFinance();
+        }
+
+        function removeExpenseRow(button) {
+            button.parentElement.remove();
+            calculateFinance();
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+
+        function numberToWords(number) {
+            if (isNaN(number) || number <= 0) return "Không đồng";
+            number = Math.round(number);
+            const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            const tien = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+
+            function dochangchuc(so, daydu) {
+                let chữ = "";
+                let chuc = Math.floor(so / 10);
+                let donvi = so % 10;
+                if (chuc > 1) {
+                    chữ = " " + chuSo[chuc] + " mươi";
+                    if (donvi === 1) chữ += " mốt";
+                    else if (donvi === 5) chữ += " lăm";
+                    else if (donvi > 0) chữ += " " + chuSo[donvi];
+                } else if (chuc === 1) {
+                    chữ = " mười";
+                    if (donvi === 1) chữ += " một";
+                    else if (donvi === 5) chữ += " lăm";
+                    else if (donvi > 0) chữ += " " + chuSo[donvi];
+                } else if (daydu && donvi > 0) {
+                    chữ = " lẻ " + chuSo[donvi];
+                } else if (donvi > 0) {
+                    chữ = " " + chuSo[donvi];
+                }
+                return chữ;
+            }
+
+            function docblock(so, daydu) {
+                let tram = Math.floor(so / 100);
+                let kq = "";
+                if (tram > 0 || daydu) {
+                    kq += " " + chuSo[tram] + " trăm";
+                    kq += dochangchuc(so % 100, true);
+                } else {
+                    kq += dochangchuc(so % 100, false);
+                }
+                return kq;
+            }
+
+            let i = 0;
+            let ketqua = "";
+            let numStr = number.toString();
+            if (numStr.length > 15) return "Số quá lớn";
+
+            while (number > 0) {
+                let tmp = number % 1000;
+                number = Math.floor(number / 1000);
+                let chuoi = docblock(tmp, number > 0) + " " + tien[i];
+                ketqua = chuoi + " " + ketqua;
+                i++;
+            }
+            ketqua = ketqua.trim().replace(/\s+/g, ' ');
+            return ketqua.charAt(0).toUpperCase() + ketqua.slice(1) + " đồng";
+        }
+
+        let lastResultText = "";
+
+        function calculateFinance() {
+            const baseSalary = getRawValue(document.getElementById('baseSalary').value);
+            const bonusSalary = getRawValue(document.getElementById('bonusSalary').value);
+            const totalIncome = baseSalary + bonusSalary;
+
+            const mealPrice = getRawValue(document.getElementById('mealPrice').value);
+            const mealsPerDay = parseFloat(document.getElementById('mealsPerDay').value) || 0;
+            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+            const totalFood = mealPrice * mealsPerDay * workDays;
+
+            document.getElementById('labelTotalFood').innerText = `${formatCurrency(mealPrice)} × ${mealsPerDay} bữa × ${workDays} ngày`;
+
+            let totalOther = 0;
+            let expenseDetails = [];
+            const expenseRows = document.querySelectorAll('#expenseListContainer .expense-row');
+            expenseRows.forEach(row => {
+                const nameInput = row.querySelector('.name-input');
+                const valInput = row.querySelectorAll('input')[1];
+                const name = nameInput.value.trim() || 'Khoản chi khác';
+                const val = getRawValue(valInput.value);
+                if (val > 0) {
+                    totalOther += val;
+                    expenseDetails.push(`- ${name}: ${formatCurrency(val)}`);
+                }
+            });
+
+            const netProfit = totalIncome - (totalFood + totalOther);
+            const salaryPerDay = workDays > 0 ? totalIncome / workDays : 0;
+            const profitPerDay = workDays > 0 ? netProfit / workDays : 0;
+
+            document.getElementById('resTotalIncome').innerText = formatCurrency(totalIncome);
+            document.getElementById('resTotalFood').innerText = formatCurrency(totalFood);
+            document.getElementById('resTotalOther').innerText = formatCurrency(totalOther);
+            document.getElementById('resNetProfit').innerText = formatCurrency(netProfit);
+            document.getElementById('resSalaryPerDay').innerText = formatCurrency(salaryPerDay);
+            document.getElementById('resProfitPerDay').innerText = formatCurrency(profitPerDay);
+
+            document.getElementById('wordsTotalIncome').innerText = numberToWords(totalIncome);
+            document.getElementById('wordsTotalFood').innerText = numberToWords(totalFood);
+            document.getElementById('wordsTotalOther').innerText = numberToWords(totalOther);
+            document.getElementById('wordsNetProfit').innerText = numberToWords(netProfit);
+
+            lastResultText =
+                `📊 BẢNG TÍNH THU NHẬP & TÀI CHÍNH THÁNG
+-----------------------------------
+💰 Tổng thu nhập (Lương + Thưởng): ${formatCurrency(totalIncome)}
+(-) Tiền ăn uống: ${formatCurrency(totalFood)}
+(-) Tổng chi phí phát sinh: ${formatCurrency(totalOther)}
+${expenseDetails.join('\n')}
+-----------------------------------
+💵 TIỀN LÃI RÒNG CÒN LẠI: ${formatCurrency(netProfit)}
+-----------------------------------
+📌 QUY ĐỔI THEO NGÀY CÔNG (${workDays} ngày làm):
+• Lương tổng / 1 ngày: ${formatCurrency(salaryPerDay)}
+• Lãi ròng / 1 ngày: ${formatCurrency(profitPerDay)}`;
+        }
+
+        function copyResults() {
+            if (!lastResultText) {
+                alert("Chưa có dữ liệu để sao chép!");
+                return;
+            }
+            navigator.clipboard.writeText(lastResultText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerText = "Copied! Đã sao chép thành công ✅";
+                setTimeout(() => {
+                    btn.innerText = "📋 Sao chép";
+                }, 2000);
+            }).catch(err => {
+                alert("Không thể sao chép tự động.");
+            });
+        }
+
+        window.onload = calculateFinance;
+    </script>
+</body>
+
+</html>
