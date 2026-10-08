@@ -14,9 +14,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 14px;
             -ms-overflow-style: none;
-            /* IE and Edge */
             scrollbar-width: none;
-            /* Firefox */
         }
 
         *::-webkit-scrollbar {
@@ -25,14 +23,18 @@
             height: 0;
         }
 
+        /* --- TRÀN TOÀN MÀN HÌNH PC --- */
         body {
             background-color: #faf7f2;
             color: #2c221e;
-            padding: 10px;
+            padding: 8px;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            overflow: hidden;
         }
 
         /* Thanh điều hướng chuyển tab */
@@ -40,15 +42,16 @@
             display: flex;
             gap: 6px;
             width: 100%;
-            max-width: 800px;
-            margin-bottom: 15px;
+            max-width: 100%;
+            margin-bottom: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
+            flex-shrink: 0;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 4px;
+            padding: 10px 4px;
             font-size: 13px;
             font-weight: bold;
             border: none;
@@ -67,27 +70,31 @@
             box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
         }
 
-        /* Khu vực chứa các tab */
+        /* Khu vực chứa các tab fit toàn màn hình */
         .tab-content {
             display: none;
             width: 100%;
-            max-width: 800px;
+            height: calc(100vh - 55px);
+            flex-direction: column;
         }
 
         .tab-content.active {
-            display: block;
+            display: flex;
         }
 
         /* CSS chung cho các khung container */
         .container {
             background: #fff;
-            padding: 20px;
+            padding: 16px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(44, 34, 30, 0.08);
             width: 100%;
+            height: 100%;
             box-sizing: border-box;
-            margin-bottom: 20px;
             border: 1px solid #f0e6dc;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
 
         /* Tab 1: Giá cà phê */
@@ -96,10 +103,11 @@
             border: 1px dashed #f39c12;
             padding: 10px;
             border-radius: 6px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-size: 14px;
             color: #b7410e;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .external-price-box a {
@@ -113,12 +121,13 @@
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: bold;
             color: #4a3b32;
             font-size: 14px;
@@ -128,11 +137,11 @@
         select,
         textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px 10px;
             box-sizing: border-box;
             border: 1px solid #dcd0c0;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 14px;
             color: #2c221e;
             background-color: #fff;
         }
@@ -149,7 +158,7 @@
             font-style: italic;
             color: #c0392b;
             font-size: 13px;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .combo-group {
@@ -162,59 +171,60 @@
             font-size: 13px;
             font-weight: normal;
             color: #6b5b52;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             text-align: center;
         }
 
         .combo-box input {
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         .result-box {
-            margin-top: 16px;
+            margin-top: 10px;
             background: #fdfaf6;
             border: 1px solid #f0e6dc;
-            padding: 14px;
+            padding: 12px;
             border-radius: 8px;
+            flex-shrink: 0;
         }
 
         .custom-result {
-            font-size: 15px;
+            font-size: 14px;
             color: #b7410e;
             font-weight: bold;
         }
 
         .spell-money {
-            font-size: 14px;
+            font-size: 13px;
             color: #27ae60;
-            margin-top: 4px;
+            margin-top: 2px;
             font-style: italic;
         }
 
         .extra-analysis {
-            margin-top: 10px;
-            padding-top: 8px;
+            margin-top: 8px;
+            padding-top: 6px;
             border-top: 1px dashed #e8ded2;
-            font-size: 14px;
+            font-size: 13px;
             color: #4a3b32;
         }
 
         .extra-analysis div {
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .breakdown-table {
             width: 100%;
-            margin-top: 6px;
+            margin-top: 4px;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .breakdown-table th,
         .breakdown-table td {
             border: 1px solid #e8ded2;
-            padding: 8px;
+            padding: 6px;
             text-align: center;
         }
 
@@ -223,7 +233,7 @@
             color: #4a3b32;
         }
 
-        /* Tab 2: Tính tiền nhanh - Có thêm cột Đơn vị */
+        /* Tab 2: Tính tiền nhanh */
         .row-header {
             display: grid;
             grid-template-columns: 1.4fr 1.2fr 0.9fr 0.8fr 1.8fr 36px;
@@ -231,20 +241,22 @@
             font-weight: bold;
             font-size: 13px;
             color: #7f6e62;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .item-row {
             display: grid;
             grid-template-columns: 1.4fr 1.2fr 0.9fr 0.8fr 1.8fr 36px;
             gap: 6px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .item-row input {
-            padding: 10px 6px;
+            padding: 8px 6px;
             font-size: 14px;
             border-radius: 8px;
         }
@@ -265,7 +277,7 @@
         .total-cell {
             background: #fdfaf6;
             border: 1px solid #dcd0c0;
-            padding: 10px 6px;
+            padding: 8px 6px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: bold;
@@ -274,7 +286,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            min-height: 45px;
+            min-height: 38px;
             white-space: nowrap;
             overflow-x: auto;
         }
@@ -285,7 +297,7 @@
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            height: 45px;
+            height: 38px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -297,36 +309,37 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 12px;
-            font-size: 15px;
+            padding: 10px;
+            font-size: 14px;
             font-weight: bold;
             width: 100%;
             cursor: pointer;
-            margin-top: 8px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 5px rgba(211, 84, 0, 0.2);
+            margin-top: 6px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         .summary-box {
             background: #fdfaf6;
             border: 1px solid #f0e6dc;
             border-radius: 10px;
-            padding: 14px;
-            margin-top: 16px;
+            padding: 10px 14px;
+            margin-top: auto;
+            flex-shrink: 0;
         }
 
         .summary-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: #4a3b32;
         }
 
         .summary-words {
-            font-size: 14px;
+            font-size: 13px;
             color: #7f6e62;
             font-style: italic;
             text-align: right;
@@ -337,18 +350,14 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 14px;
-            font-size: 16px;
+            padding: 12px;
+            font-size: 15px;
             font-weight: bold;
             width: 100%;
             cursor: pointer;
-            margin-top: 12px;
-            transition: background 0.2s;
+            margin-top: 8px;
+            flex-shrink: 0;
             box-shadow: 0 3px 8px rgba(142, 68, 173, 0.25);
-        }
-
-        .btn-copy:active {
-            background: #6c3483;
         }
 
         .btn-excel {
@@ -356,32 +365,27 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 14px;
-            font-size: 16px;
+            padding: 12px;
+            font-size: 15px;
             font-weight: bold;
             width: 100%;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
-            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.25);
-        }
-
-        .btn-excel:active {
-            background: #1e8449;
+            margin-top: 8px;
+            flex-shrink: 0;
         }
 
         /* Tab 3: Đếm tiền */
         .money-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 16px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
         }
 
         .money-table th,
         .money-table td {
             border: 1px solid #e8ded2;
-            padding: 10px;
+            padding: 6px 10px;
             text-align: center;
             vertical-align: middle;
         }
@@ -389,41 +393,249 @@
         .money-table th {
             background-color: #f4ede4;
             color: #4a3b32;
-            font-size: 14px;
         }
 
         .money-table td input {
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #2c221e;
-            padding: 8px;
+            padding: 6px;
         }
 
         /* Tab 4: Cân cà */
         .can-ca-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
-            font-size: 14px;
+            margin-bottom: 8px;
+            font-size: 13px;
         }
 
         .can-ca-table th,
         .can-ca-table td {
             border: 1px solid #e8ded2;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
         }
 
         .can-ca-table th {
             background-color: #d35400;
             color: white;
-            font-size: 14px;
         }
 
-        .can-ca-table td input {
+        /* TAB 6: TÍNH CÔNG (Full màn hình, cuộn riêng phát sinh) */
+        .tinhcong-wrapper {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 16px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .tinhcong-wrapper {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+        }
+        .tc-box {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+        .tc-box.result-box {
+            background: #ffffff;
+            border: 2px solid #3b82f6;
+        }
+        .tc-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 8px 0 4px 0;
+            color: #1d4ed8;
+            border-left: 4px solid #3b82f6;
+            padding-left: 8px;
+            flex-shrink: 0;
+        }
+        .tc-title:first-child {
+            margin-top: 0;
+        }
+        .tc-group {
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        .tc-label {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #475569;
             text-align: center;
-            font-size: 15px;
+        }
+        .tc-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            background: #fff;
+            color: #0f172a;
+            text-align: center;
+        }
+        .tc-input.currency-input {
+            font-weight: 700;
+        }
+        .tc-row {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .tc-row .tc-group {
+            flex: 1;
+        }
+        .tc-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 6px;
+            min-height: 40px;
+        }
+        .tc-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .tc-scroll::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        .tc-item-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .tc-item-row input.name-input {
+            flex: 1.5;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .tc-item-row input.currency-input {
+            flex: 1.5;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .tc-btn-del {
+            background-color: #fee2e2;
+            color: #ef4444;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .tc-btn-secondary {
+            background-color: #e0f2fe;
+            color: #1d4ed8;
+            border: none;
+            padding: 5px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .tc-sheet {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            justify-content: space-between;
+        }
+        .tc-sheet-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .tc-sheet-row span, .tc-sheet-row strong {
+            flex: 1;
+            text-align: center;
+        }
+        .tc-sheet-row span:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+        .tc-sheet-row strong:last-child {
+            text-align: right;
+            font-size: 1.1rem;
+        }
+        .tc-sheet-row.operator {
+            color: #d97706;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 2px 0;
+            border-bottom: none;
+            justify-content: center;
+            text-align: center;
+        }
+        .tc-sheet-row.total-highlight {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: #059669;
+            border-top: 2px solid #cbd5e1;
+            margin-top: 2px;
+            padding-top: 6px;
+        }
+        .tc-sub-words {
+            font-size: 0.8rem;
+            color: #475569;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+        .tc-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        .tc-copy-btn {
+            background-color: #059669;
+            color: white;
+            border: none;
+            flex: 1;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .tc-clear-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         /* --- TOAST NOTIFICATION --- */
@@ -434,7 +646,7 @@
             transform: translateX(-50%) translateY(100px);
             background: rgba(44, 34, 30, 0.95);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-size: 14px;
             font-weight: 500;
@@ -452,18 +664,12 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 12px;
-            }
-        }
     </style>
 </head>
 
 <body>
 
-    <!-- Thanh chuyển Tab -->
+    <!-- Thanh điều hướng chuyển tab -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('coffee')">Giá ☕</button>
         <button class="tab-btn" onclick="switchTab('fastcalc')">Tính 💵</button>
@@ -476,7 +682,6 @@
     <!-- TAB 1: GIÁ CÀ PHÊ -->
     <div id="tab-coffee" class="tab-content active">
         <div class="container">
-
             <div class="external-price-box">
                 📊 Cập nhật giá cà phê mới nhất:
                 <a href="https://giacaphe.com/gia-ca-phe-noi-dia/" target="_blank">Xem giá tại đây</a>
@@ -516,7 +721,7 @@
 
                 <div class="extra-analysis">
                     <div id="monthlyResult">📅 Mỗi tháng thu nhập: 0 đ / tháng</div>
-                    <div style="font-weight: bold; margin-top: 6px;">💵 Quy đổi mệnh giá tiền:</div>
+                    <div style="font-weight: bold; margin-top: 4px;">💵 Quy đổi mệnh giá tiền:</div>
                     <table class="breakdown-table">
                         <thead>
                             <tr>
@@ -524,9 +729,7 @@
                                 <th>Số lượng tờ</th>
                             </tr>
                         </thead>
-                        <tbody id="breakdownBody">
-                            <!-- Dữ liệu mệnh giá tự động điền -->
-                        </tbody>
+                        <tbody id="breakdownBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -547,7 +750,7 @@
                 <div></div>
             </div>
 
-            <div id="list-container"></div>
+            <div id="list-container" style="flex:1; overflow-y: auto;"></div>
 
             <button class="btn-add" onclick="addRow()">+ Thêm hàng</button>
 
@@ -565,7 +768,7 @@
 
     <!-- TAB 3: ĐẾM TIỀN -->
     <div id="tab-counting" class="tab-content">
-        <div class="container">
+        <div class="container" style="overflow-y: auto;">
             <table class="money-table">
                 <thead>
                     <tr>
@@ -574,9 +777,7 @@
                         <th>Thành tiền</th>
                     </tr>
                 </thead>
-                <tbody id="moneyCountingBody">
-                    <!-- Tự động tạo bằng JS -->
-                </tbody>
+                <tbody id="moneyCountingBody"></tbody>
             </table>
 
             <div class="summary-box">
@@ -594,19 +795,17 @@
     <!-- TAB 4: CÂN CÀ -->
     <div id="tab-canca" class="tab-content">
         <div class="container">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Họ và tên:</label>
-                    <input type="text" id="canCaTen" placeholder="Nhập tên..." autocomplete="off">
-                </div>
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Đơn Giá (VNĐ / kg):</label>
-                    <input type="text" id="canCaDonGia" placeholder="Nhập đơn giá..." autocomplete="off"
-                        oninput="handleCanCaPriceInput(this)" inputmode="numeric">
-                </div>
+            <div class="form-group">
+                <label>Họ và tên:</label>
+                <input type="text" id="canCaTen" placeholder="Nhập tên..." autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Đơn Giá (VNĐ / kg):</label>
+                <input type="text" id="canCaDonGia" placeholder="Nhập đơn giá..." autocomplete="off"
+                    oninput="handleCanCaPriceInput(this)" inputmode="numeric">
             </div>
 
-            <div class="mb-3">
+            <div style="flex:1; overflow-y: auto; margin-bottom: 8px;">
                 <table class="can-ca-table">
                     <thead>
                         <tr>
@@ -615,15 +814,13 @@
                             <th style="width: 60px;">Xóa</th>
                         </tr>
                     </thead>
-                    <tbody id="canCaDanhSach">
-                        <!-- Thêm dòng động -->
-                    </tbody>
+                    <tbody id="canCaDanhSach"></tbody>
                 </table>
             </div>
 
             <button class="btn-add" onclick="themDongCanCa()">+ Thêm dòng cân</button>
 
-            <div class="summary-box" style="margin-top: 10px;">
+            <div class="summary-box" style="margin-top: 4px;">
                 <div class="summary-line">
                     <span>Tổng Số Kg:</span>
                     <span id="canCaTongKg">0.0 kg</span>
@@ -639,25 +836,140 @@
         </div>
     </div>
 
-    <!-- TAB 5: ĐỔI DẠNG EXCEL TỪ VĂN BẢN DÁN VÀO -->
+    <!-- TAB 5: ĐỔI EXCEL -->
     <div id="tab-converter" class="tab-content">
         <div class="container">
-            <div class="form-group">
+            <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <label style="margin-bottom: 0;">Chuyển văn bản thành excel:</label>
                     <div style="display: flex; gap: 6px;">
                         <button onclick="pasteFromClipboard()"
-                            style="background: #2980b9; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">📋
-                            Dán</button>
+                            style="background: #2980b9; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">📋 Dán</button>
                         <button onclick="clearText()"
-                            style="background: #e74c3c; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">🗑️
-                            Xóa</button>
+                            style="background: #e74c3c; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">🗑️ Xóa</button>
                     </div>
                 </div>
-                <textarea id="rawTextPaste" rows="10" placeholder="Dán văn bản cân cà vào đây..." autocomplete="off"
-                    style="resize: vertical; font-family: monospace; font-size: 13px;"></textarea>
+                <textarea id="rawTextPaste" placeholder="Dán văn bản cân cà vào đây..." autocomplete="off"
+                    style="flex: 1; resize: none; font-family: monospace; font-size: 13px;"></textarea>
             </div>
             <button class="btn-excel" onclick="convertAndCopyForExcel()">Chuyển Đổi & Sao Chép</button>
+        </div>
+    </div>
+
+    <!-- TAB 6: TÍNH CÔNG -->
+    <div id="tab-tinhcong" class="tab-content">
+        <div class="container" style="padding: 14px;">
+            <div class="tinhcong-wrapper">
+                <!-- Cột trái: Nhập liệu -->
+                <div class="tc-box">
+                    <div class="tc-title">Thu Nhập</div>
+                    <div class="tc-row">
+                        <div class="tc-group">
+                            <label class="tc-label" for="monthlySalary">Lương tháng (VNĐ):</label>
+                            <input type="text" id="monthlySalary" class="tc-input currency-input" inputmode="numeric" placeholder="VD: 7.000.000" autocomplete="off" oninput="onMonthlyInput(this)">
+                        </div>
+                        <div class="tc-group">
+                            <label class="tc-label" for="dailySalaryInput">Lương ngày (VNĐ):</label>
+                            <input type="text" id="dailySalaryInput" class="tc-input currency-input" inputmode="numeric" placeholder="VD: 300.000" autocomplete="off" oninput="onDailyInput(this)">
+                        </div>
+                    </div>
+                    <div class="tc-row">
+                        <div class="tc-group" style="width: 100%;">
+                            <label class="tc-label" for="bonusSalary">Thưởng / Phụ cấp tháng (VNĐ):</label>
+                            <input type="text" id="bonusSalary" class="tc-input currency-input" inputmode="numeric" placeholder="VD: 500.000" autocomplete="off" oninput="formatInput(this)">
+                        </div>
+                    </div>
+
+                    <div class="tc-title">Chi Phí Ăn Uống & Ngày Công</div>
+                    <div class="tc-row">
+                        <div class="tc-group">
+                            <label class="tc-label" for="mealPrice">Tiền ăn 1 bữa:</label>
+                            <input type="text" id="mealPrice" class="tc-input currency-input" inputmode="numeric" placeholder="VD: 35.000" autocomplete="off" oninput="formatInput(this)">
+                        </div>
+                        <div class="tc-group">
+                            <label class="tc-label" for="mealsPerDay">Số bữa/ngày:</label>
+                            <input type="number" id="mealsPerDay" class="tc-input" inputmode="numeric" placeholder="VD: 3" value="3" autocomplete="off" oninput="calculateFinance()">
+                        </div>
+                        <div class="tc-group">
+                            <label class="tc-label" for="workDays">Số ngày làm:</label>
+                            <input type="number" id="workDays" class="tc-input" inputmode="numeric" placeholder="VD: 26" autocomplete="off" oninput="onWorkDaysInput()">
+                        </div>
+                    </div>
+
+                    <div class="tc-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Chi Phí Phát Sinh</span>
+                        <button type="button" class="tc-btn-secondary" onclick="addExpenseRow()">+ Thêm khoản</button>
+                    </div>
+                    
+                    <div class="tc-scroll" id="expenseListContainer">
+                        <div class="tc-item-row">
+                            <input type="text" class="tc-input name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                            <input type="text" class="tc-input currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                            <button type="button" class="tc-btn-del" onclick="removeExpenseRow(this)">×</button>
+                        </div>
+                        <div class="tc-item-row">
+                            <input type="text" class="tc-input name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                            <input type="text" class="tc-input currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                            <button type="button" class="tc-btn-del" onclick="removeExpenseRow(this)">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Kết quả -->
+                <div class="tc-box result-box">
+                    <div class="tc-title" style="margin-top: 0; color: #1d4ed8; text-align: center;">Kết Quả</div>
+                    
+                    <div class="tc-sheet">
+                        <div>
+                            <div class="tc-sheet-row">
+                                <span>Tổng thu nhập:</span>
+                                <strong id="resTotalIncome">0 đ</strong>
+                            </div>
+                            <div class="tc-sub-words" id="wordsTotalIncome">Không đồng</div>
+                        </div>
+
+                        <div class="tc-sheet-row operator">(-) Tiền ăn uống:</div>
+                        <div>
+                            <div class="tc-sheet-row">
+                                <span style="color: #475569; text-align: center; font-size: 0.9rem;" id="labelTotalFood">0 đ × 0 bữa × 0 ngày</span>
+                                <strong id="resTotalFood">0 đ</strong>
+                            </div>
+                            <div class="tc-sub-words" id="wordsTotalFood">Không đồng</div>
+                        </div>
+
+                        <div class="tc-sheet-row operator">(-) Chi phí phát sinh:</div>
+                        <div>
+                            <div class="tc-sheet-row">
+                                <span style="color: #475569; text-align: center; font-size: 0.9rem;">Tổng các khoản phát sinh</span>
+                                <strong id="resTotalOther">0 đ</strong>
+                            </div>
+                            <div class="tc-sub-words" id="wordsTotalOther">Không đồng</div>
+                        </div>
+
+                        <div class="tc-sheet-row total-highlight">
+                            <span>LÃI RÒNG CÒN LẠI:</span>
+                            <span id="resNetProfit">0 đ</span>
+                        </div>
+                        <div class="tc-sub-words" id="wordsNetProfit" style="font-weight: bold; color: #059669; font-size: 0.85rem;">Không đồng</div>
+
+                        <hr style="border: 0; border-top: 1.5px dashed #cbd5e1; margin: 4px 0;">
+
+                        <div class="tc-sheet-row">
+                            <span>Lương tổng / 1 ngày làm:</span>
+                            <strong id="resSalaryPerDay">0 đ</strong>
+                        </div>
+                        <div class="tc-sheet-row" style="color: #059669; font-weight: bold;">
+                            <span>Lãi ròng / 1 ngày làm:</span>
+                            <strong id="resProfitPerDay">0 đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="tc-actions">
+                        <button class="tc-copy-btn" onclick="copyResults()">📋 Sao chép</button>
+                        <button class="tc-clear-btn" onclick="clearAllData()" title="Xóa toàn bộ dữ liệu đã nhập">🗑️ Xóa</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -665,7 +977,6 @@
     <div id="toast-notification">✅ Đã sao chép</div>
 
     <script>
-        /* --- HÀM ĐỊNH DẠNG NGÀY GIỜ ĐẦY ĐỦ (DD/MM/YYYY) --- */
         function getFormattedDateTime() {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -675,7 +986,6 @@
             return `${timeStr} - ${day}/${month}/${year}`;
         }
 
-        /* --- HÀM HIỂN THỊ TOAST MƯỢT MÀ --- */
         function showToast(message) {
             const toast = document.getElementById('toast-notification');
             toast.innerHTML = `✅ ${message}`;
@@ -685,7 +995,6 @@
             }, 2000);
         }
 
-        /* --- CHỨC NĂNG CHUYỂN TAB --- */
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -705,10 +1014,12 @@
             } else if (tabName === 'converter') {
                 document.getElementById('tab-converter').classList.add('active');
                 document.querySelectorAll('.tab-btn')[4].classList.add('active');
+            } else if (tabName === 'tinhcong') {
+                document.getElementById('tab-tinhcong').classList.add('active');
+                document.querySelectorAll('.tab-btn')[5].classList.add('active');
             }
         }
 
-        /* --- HÀM ĐỌC SỐ MỞ RỘNG --- */
         function docSo(so) {
             if (isNaN(so) || so <= 0) return "Không đồng";
             const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
@@ -787,7 +1098,6 @@
             return Number(num).toLocaleString('vi-VN');
         }
 
-        /* --- SCRIPT CHO TAB 1 --- */
         function handlePriceInput(input) {
             let cleanVal = input.value.replace(/\D/g, '');
             input.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('vi-VN') : '';
@@ -882,7 +1192,6 @@
             });
         }
 
-        /* --- SCRIPT CHO TAB 2 (Hỗ trợ số thập phân và cột Đơn vị) --- */
         function addRow(name = "", price = "", qty = "", unit = "") {
             const container = document.getElementById("list-container");
             const row = document.createElement("div");
@@ -921,16 +1230,11 @@
 
             rows.forEach(row => {
                 const priceVal = parseFloat(row.querySelector(".price-input").value.replace(/\./g, "")) || 0;
-
-                // Thay dấu phẩy thành dấu chấm để xử lý số thập phân (ví dụ: 0,5 hoặc 0.5)
                 let qtyStr = row.querySelector(".qty-input").value.trim().replace(',', '.');
                 const qtyVal = parseFloat(qtyStr) || 0;
-
                 const total = priceVal * qtyVal;
 
-                const totalCell = row.querySelector(".total-cell");
-                totalCell.innerText = formatNumber(Math.round(total)) + " VND";
-
+                row.querySelector(".total-cell").innerText = formatNumber(Math.round(total)) + " VND";
                 grandTotal += total;
             });
 
@@ -969,14 +1273,13 @@
             });
         }
 
-        /* --- SCRIPT CHO TAB 3 --- */
         const moneyDenominations = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000];
 
         function initMoneyCounting() {
             const tbody = document.getElementById('moneyCountingBody');
             tbody.innerHTML = "";
 
-            moneyDenominations.forEach((denom, index) => {
+            moneyDenominations.forEach((denom) => {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="font-weight: bold; color: #4a3b32;">${denom.toLocaleString('vi-VN')} đ</td>
@@ -1042,7 +1345,6 @@
             });
         }
 
-        /* --- SCRIPT CHO TAB 4 (CÂN CÀ) --- */
         function handleCanCaPriceInput(input) {
             let cleanVal = input.value.replace(/\D/g, '');
             input.value = cleanVal ? parseInt(cleanVal, 10).toLocaleString('vi-VN') : '';
@@ -1054,15 +1356,14 @@
             const rowCount = tbody.rows.length + 1;
 
             const tr = document.createElement('tr');
-            tr.className = "hover:bg-gray-50 transition";
             tr.innerHTML = `
                 <td class="font-semibold text-gray-700 canca-stt">${rowCount}</td>
                 <td>
                     <input type="number" inputmode="decimal" step="0.1" min="0" placeholder="Nhập số kg..." autocomplete="off" oninput="kiemTraVaTinhCanCa(this)" 
-                        class="canca-kg-input w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-base">
+                        class="canca-kg-input" style="width: 100%; padding: 6px; border: 1px solid #dcd0c0; border-radius: 6px;">
                 </td>
                 <td>
-                    <button onclick="xoaDongCanCa(this)" class="bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-2 rounded-lg text-xs font-bold transition">✕</button>
+                    <button onclick="xoaDongCanCa(this)" style="background: #fee2e2; color: #ef4444; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕</button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -1075,34 +1376,27 @@
         }
 
         function kiemTraVaTinhCanCa(input) {
-            if (input.value < 0) {
-                input.value = 0;
-            }
+            if (input.value < 0) input.value = 0;
             tinhToanCanCa();
         }
 
         function xoaDongCanCa(button) {
-            const row = button.closest('tr');
-            row.remove();
+            button.closest('tr').remove();
             capNhatSttCanCa();
             tinhToanCanCa();
         }
 
         function capNhatSttCanCa() {
-            const rows = document.querySelectorAll('#canCaDanhSach tr');
-            rows.forEach((row, index) => {
+            document.querySelectorAll('#canCaDanhSach tr').forEach((row, index) => {
                 row.querySelector('.canca-stt').innerText = index + 1;
             });
         }
 
         function tinhToanCanCa() {
-            const inputs = document.querySelectorAll('.canca-kg-input');
             let tongKg = 0;
-            inputs.forEach(input => {
+            document.querySelectorAll('.canca-kg-input').forEach(input => {
                 let val = parseFloat(input.value);
-                if (!isNaN(val) && val > 0) {
-                    tongKg += val;
-                }
+                if (!isNaN(val) && val > 0) tongKg += val;
             });
 
             const donGiaVal = document.getElementById('canCaDonGia').value.replace(/\./g, '');
@@ -1137,24 +1431,15 @@
 
             const thanhTien = Math.round(tongKg * donGia);
 
-            let textToCopy = `📋 BẢNG KÊ CÂN CÀ PHÊ\n`;
-            textToCopy += `----------------------------------\n`;
+            let textToCopy = `📋 BẢNG KÊ CÂN CÀ PHÊ\n----------------------------------\n`;
             textToCopy += `👤 Họ và tên: ${ten}\n`;
             textToCopy += `⏰ Thời gian chốt: ${getFormattedDateTime()}\n`;
-            textToCopy += `----------------------------------\n`;
-            textToCopy += `Chi tiết các lần cân:\n`;
-
-            if (chiTietList.length > 0) {
-                textToCopy += chiTietList.join('\n') + '\n';
-            } else {
-                textToCopy += `(Chưa có lần cân nào > 0)\n`;
-            }
-
+            textToCopy += `----------------------------------\nChi tiết các lần cân:\n`;
+            textToCopy += (chiTietList.length > 0 ? chiTietList.join('\n') : `(Chưa có lần cân nào > 0)`) + `\n`;
             textToCopy += `----------------------------------\n`;
             textToCopy += `👉 Tổng số kg: ${(Math.round(tongKg * 10) / 10)} kg\n`;
             textToCopy += `💰 Đơn giá: ${donGiaStr} VNĐ/kg\n`;
-            textToCopy += `💵 Thành tiền: ${formatNumber(thanhTien)} VNĐ\n`;
-            textToCopy += `(Bằng chữ: ${docSo(thanhTien)})`;
+            textToCopy += `💵 Thành tiền: ${formatNumber(thanhTien)} VNĐ\n(Bằng chữ: ${docSo(thanhTien)})`;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast("Đã sao chép báo cáo Cân Cà!");
@@ -1163,13 +1448,12 @@
             });
         }
 
-        /* --- CÁC HÀM HỖ TRỢ TAB ĐỔI --- */
         function pasteFromClipboard() {
             navigator.clipboard.readText().then(text => {
                 document.getElementById('rawTextPaste').value = text;
                 showToast("Đã dán nội dung từ bộ nhớ tạm!");
-            }).catch(err => {
-                showToast("Trình duyệt không cho phép đọc tự động, hãy bấm Ctrl+V!");
+            }).catch(() => {
+                showToast("Hãy bấm Ctrl+V!");
             });
         }
 
@@ -1178,7 +1462,6 @@
             showToast("Đã xóa nội dung!");
         }
 
-        /* --- SCRIPT CHUYỂN ĐỔI VĂN BẢN DÁN THÀNH DẠNG EXCEL --- */
         function convertAndCopyForExcel() {
             let rawText = document.getElementById('rawTextPaste').value.trim();
             if (!rawText) {
@@ -1188,64 +1471,192 @@
 
             let lines = rawText.split('\n');
             let chiTietCans = [];
-
             let hoTen = "Chưa nhập tên";
             let thoiGian = getFormattedDateTime();
-            let tongKg = "0";
-            let donGia = "0";
-            let thanhTien = "0";
-            let bangChu = "Không đồng";
+            let tongKg = "0", donGia = "0", thanhTien = "0", bangChu = "Không đồng";
 
             lines.forEach(line => {
                 let trimmed = line.trim();
-                if (trimmed.includes("Họ và tên:")) {
-                    hoTen = trimmed.split("Họ và tên:")[1].trim();
-                } else if (trimmed.includes("Thời gian chốt:")) {
-                    thoiGian = trimmed.split("Thời gian chốt:")[1].trim();
-                } else if (trimmed.startsWith("Lần")) {
+                if (trimmed.includes("Họ và tên:")) hoTen = trimmed.split("Họ và tên:")[1].trim();
+                else if (trimmed.includes("Thời gian chốt:")) thoiGian = trimmed.split("Thời gian chốt:")[1].trim();
+                else if (trimmed.startsWith("Lần")) {
                     let parts = trimmed.split(":");
-                    if (parts.length >= 2) {
-                        let stt = parts[0].trim();
-                        let kgVal = parts[1].replace("kg", "").trim();
-                        chiTietCans.push(`${stt}\t${kgVal}`);
-                    }
-                } else if (trimmed.includes("Tổng số kg:")) {
-                    tongKg = trimmed.split("Tổng số kg:")[1].replace("kg", "").trim();
-                } else if (trimmed.includes("Đơn giá:")) {
-                    donGia = trimmed.split("Đơn giá:")[1].replace("VNĐ/kg", "").trim();
-                } else if (trimmed.includes("Thành tiền:")) {
-                    thanhTien = trimmed.split("Thành tiền:")[1].replace("VNĐ", "").trim();
-                } else if (trimmed.includes("Bằng chữ:")) {
-                    bangChu = trimmed.split("Bằng chữ:")[1].replace(")", "").trim();
-                }
+                    if (parts.length >= 2) chiTietCans.push(`${parts[0].trim()}\t${parts[1].replace("kg", "").trim()}`);
+                } else if (trimmed.includes("Tổng số kg:")) tongKg = trimmed.split("Tổng số kg:")[1].replace("kg", "").trim();
+                else if (trimmed.includes("Đơn giá:")) donGia = trimmed.split("Đơn giá:")[1].replace("VNĐ/kg", "").trim();
+                else if (trimmed.includes("Thành tiền:")) thanhTien = trimmed.split("Thành tiền:")[1].replace("VNĐ", "").trim();
+                else if (trimmed.includes("Bằng chữ:")) bangChu = trimmed.split("Bằng chữ:")[1].replace(")", "").trim();
             });
 
-            if (chiTietCans.length === 0) {
-                lines.forEach(line => {
-                    let trimmed = line.trim();
-                    if (!trimmed.includes("BẢNG KÊ") && !trimmed.includes("Họ và tên") && !trimmed.includes("Thời gian") && !trimmed.includes("Tổng số kg") && !trimmed.includes("Đơn giá") && !trimmed.includes("Thành tiền") && !trimmed.includes("Bằng chữ") && !trimmed.includes("---") && trimmed !== "") {
-                        chiTietCans.push(`Lần ${chiTietCans.length + 1}\t${trimmed.replace("kg", "").trim()}`);
-                    }
-                });
-            }
-
-            let excelOutput = `Họ và tên:\t${hoTen}\n`;
-            excelOutput += `Thời gian chốt:\t${thoiGian}\n\n`;
-            excelOutput += `STT\tSố Kg (kg)\n`;
-
-            if (chiTietCans.length > 0) {
-                excelOutput += chiTietCans.join('\n') + '\n';
-            } else {
-                excelOutput += `-\t0\n`;
-            }
-
-            excelOutput += `\nTổng số kg:\t${tongKg}\n`;
-            excelOutput += `Đơn giá (VNĐ/kg):\t${donGia}\n`;
-            excelOutput += `Thành tiền (VNĐ):\t${thanhTien}\n`;
-            excelOutput += `Bằng chữ:\t${bangChu}`;
+            let excelOutput = `Họ và tên:\t${hoTen}\nThời gian chốt:\t${thoiGian}\n\nSTT\tSố Kg (kg)\n`;
+            excelOutput += (chiTietCans.length > 0 ? chiTietCans.join('\n') : `-\t0`) + `\n\n`;
+            excelOutput += `Tổng số kg:\t${tongKg}\nĐơn giá (VNĐ/kg):\t${donGia}\nThành tiền (VNĐ):\t${thanhTien}\nBằng chữ:\t${bangChu}`;
 
             navigator.clipboard.writeText(excelOutput).then(() => {
                 showToast("Đã chuyển đổi thành công! Mở Excel và dán (Ctrl+V)");
+            }).catch(() => {
+                showToast("Không thể sao chép tự động!");
+            });
+        }
+
+        let activeInputMode = 'monthly';
+
+        function formatInput(input) {
+            let cursorPosition = input.selectionStart;
+            let oldLength = input.value.length;
+            let value = input.value.replace(/\D/g, "");
+            if (value === "") {
+                input.value = "";
+                calculateFinance();
+                return;
+            }
+            input.value = Number(value).toLocaleString('vi-VN');
+            let newLength = input.value.length;
+            cursorPosition = cursorPosition + (newLength - oldLength);
+            input.setSelectionRange(cursorPosition, cursorPosition);
+            calculateFinance();
+        }
+
+        function onMonthlyInput(input) {
+            activeInputMode = 'monthly';
+            document.getElementById('dailySalaryInput').value = "";
+            formatInput(input);
+        }
+
+        function onDailyInput(input) {
+            activeInputMode = 'daily';
+            document.getElementById('monthlySalary').value = "";
+            formatInput(input);
+        }
+
+        function onWorkDaysInput() {
+            if (activeInputMode === 'daily') {
+                let dailyVal = getRawValue(document.getElementById('dailySalaryInput').value);
+                let workDays = parseFloat(document.getElementById('workDays').value) || 0;
+                let calculatedMonthly = dailyVal * workDays;
+                document.getElementById('monthlySalary').value = calculatedMonthly > 0 ? calculatedMonthly.toLocaleString('vi-VN') : "";
+            }
+            calculateFinance();
+        }
+
+        function getRawValue(val) {
+            if (!val) return 0;
+            return parseFloat(val.toString().replace(/\./g, "")) || 0;
+        }
+
+        function addExpenseRow() {
+            const container = document.getElementById('expenseListContainer');
+            const row = document.createElement('div');
+            row.className = 'tc-item-row';
+            row.innerHTML = `
+                <input type="text" class="tc-input name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                <input type="text" class="tc-input currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                <button type="button" class="tc-btn-del" onclick="removeExpenseRow(this)">×</button>
+            `;
+            container.appendChild(row);
+            calculateFinance();
+        }
+
+        function removeExpenseRow(button) {
+            button.parentElement.remove();
+            calculateFinance();
+        }
+
+        function clearAllData() {
+            document.querySelectorAll('#tab-tinhcong input').forEach(input => {
+                input.value = "";
+            });
+            document.getElementById('mealsPerDay').value = "3";
+            const container = document.getElementById('expenseListContainer');
+            container.innerHTML = `
+                <div class="tc-item-row">
+                    <input type="text" class="tc-input name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                    <input type="text" class="tc-input currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                    <button type="button" class="tc-btn-del" onclick="removeExpenseRow(this)">×</button>
+                </div>
+                <div class="tc-item-row">
+                    <input type="text" class="tc-input name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                    <input type="text" class="tc-input currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                    <button type="button" class="tc-btn-del" onclick="removeExpenseRow(this)">×</button>
+                </div>
+            `;
+            calculateFinance();
+            showToast("Đã xóa toàn bộ dữ liệu!");
+        }
+
+        let lastResultText = "";
+
+        function calculateFinance() {
+            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+
+            if (activeInputMode === 'daily') {
+                let dailyVal = getRawValue(document.getElementById('dailySalaryInput').value);
+                let calculatedMonthly = dailyVal * workDays;
+                document.getElementById('monthlySalary').value = calculatedMonthly > 0 ? calculatedMonthly.toLocaleString('vi-VN') : "";
+            }
+
+            const baseSalary = getRawValue(document.getElementById('monthlySalary').value);
+            const bonusSalary = getRawValue(document.getElementById('bonusSalary').value);
+            const totalIncome = baseSalary + bonusSalary;
+
+            const mealPrice = getRawValue(document.getElementById('mealPrice').value);
+            const mealsPerDay = parseFloat(document.getElementById('mealsPerDay').value) || 0;
+            const totalFood = mealPrice * mealsPerDay * workDays;
+
+            document.getElementById('labelTotalFood').innerText = `${formatCurrency(mealPrice)} × ${mealsPerDay} bữa × ${workDays} ngày`;
+
+            let totalOther = 0;
+            let expenseDetails = [];
+            const expenseRows = document.querySelectorAll('#expenseListContainer .tc-item-row');
+            expenseRows.forEach(row => {
+                const nameInput = row.querySelector('.name-input');
+                const valInput = row.querySelectorAll('input')[1];
+                const name = nameInput.value.trim() || 'Khoản chi khác';
+                const val = getRawValue(valInput.value);
+                if (val > 0) {
+                    totalOther += val;
+                    expenseDetails.push(`- ${name}: ${formatCurrency(val)}`);
+                }
+            });
+
+            const netProfit = totalIncome - (totalFood + totalOther);
+            const salaryPerDay = workDays > 0 ? totalIncome / workDays : 0;
+            const profitPerDay = workDays > 0 ? netProfit / workDays : 0;
+
+            document.getElementById('resTotalIncome').innerText = formatCurrency(totalIncome);
+            document.getElementById('resTotalFood').innerText = formatCurrency(totalFood);
+            document.getElementById('resTotalOther').innerText = formatCurrency(totalOther);
+            document.getElementById('resNetProfit').innerText = formatCurrency(netProfit);
+            document.getElementById('resSalaryPerDay').innerText = formatCurrency(salaryPerDay);
+            document.getElementById('resProfitPerDay').innerText = formatCurrency(profitPerDay);
+
+            document.getElementById('wordsTotalIncome').innerText = docSo(totalIncome);
+            document.getElementById('wordsTotalFood').innerText = docSo(totalFood);
+            document.getElementById('wordsTotalOther').innerText = docSo(totalOther);
+            document.getElementById('wordsNetProfit').innerText = docSo(netProfit);
+
+            lastResultText = 
+`📊 BẢNG TÍNH THU NHẬP & TÀI CHÍNH THÁNG
+-----------------------------------
+💰 Tổng thu nhập (Lương + Thưởng): ${formatCurrency(totalIncome)}
+(-) Tiền ăn uống: ${formatCurrency(totalFood)}
+(-) Tổng chi phí phát sinh: ${formatCurrency(totalOther)}
+${expenseDetails.join('\n')}
+-----------------------------------
+💵 TIỀN LÃI RÒNG CÒN LẠI: ${formatCurrency(netProfit)}
+-----------------------------------
+📌 QUY ĐỔI THEO NGÀY CÔNG (${workDays} ngày làm):
+• Lương tổng / 1 ngày: ${formatCurrency(salaryPerDay)}
+• Lãi ròng / 1 ngày: ${formatCurrency(profitPerDay)}`;
+        }
+
+        function copyResults() {
+            if (!lastResultText) {
+                showToast("Chưa có dữ liệu để sao chép!");
+                return;
+            }
+            navigator.clipboard.writeText(lastResultText).then(() => {
+                showToast("Đã sao chép kết quả báo cáo!");
             }).catch(() => {
                 showToast("Không thể sao chép tự động!");
             });
@@ -1257,7 +1668,8 @@
             addRow();
             addRow();
             initMoneyCounting();
-            themDongCanCan();
+            themDongCanCa();
+            calculateFinance();
         };
     </script>
 </body>
