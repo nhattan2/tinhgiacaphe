@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tính Lương</title>
-    <link rel="icon" href="logoo.png" />
+    <link rel="icon" href="logo.png" />
     <style>
         :root {
             --primary: #3b82f6;
             --primary-dark: #1d4ed8;
             --success: #059669;
             --danger: #ef4444;
+            --danger-hover: #dc2626;
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #0f172a;
@@ -24,14 +25,12 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            /* Chặn bôi đen toàn bộ trang */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
 
-        /* Cho phép bôi đen/nhập liệu bên trong các ô input để người dùng nhập số liệu */
         input {
             user-select: text !important;
             -webkit-user-select: text !important;
@@ -315,11 +314,18 @@
             font-weight: 600;
         }
 
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
         .copy-btn {
             background-color: var(--success);
             color: white;
             border: none;
-            width: 100%;
+            flex: 1;
             padding: 12px;
             font-size: 1.05rem;
             font-weight: 700;
@@ -330,12 +336,30 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 8px;
-            flex-shrink: 0;
         }
 
         .copy-btn:hover {
             background-color: #047857;
+        }
+
+        .clear-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .clear-btn:hover {
+            background-color: var(--danger-hover);
         }
     </style>
 </head>
@@ -348,21 +372,28 @@
         <div class="grid-layout">
             <!-- CỘT TRÁI: NHẬP LIỆU -->
             <div class="column-box">
-                <div class="section-title">Thu Nhập </div>
+                <div class="section-title">Thu Nhập</div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="baseSalary">Lương cơ bản (VNĐ):</label>
-                        <input type="text" id="baseSalary" class="currency-input" inputmode="numeric"
-                            placeholder="VD: 7.000.000" autocomplete="off" oninput="formatInput(this)">
+                        <label for="monthlySalary">Lương tháng (VNĐ):</label>
+                        <input type="text" id="monthlySalary" class="currency-input" inputmode="numeric"
+                            placeholder="VD: 7.000.000" autocomplete="off" oninput="onMonthlyInput(this)">
                     </div>
                     <div class="form-group">
-                        <label for="bonusSalary">Thưởng / Phụ cấp (VNĐ):</label>
+                        <label for="dailySalaryInput">Lương ngày (VNĐ):</label>
+                        <input type="text" id="dailySalaryInput" class="currency-input" inputmode="numeric"
+                            placeholder="VD: 300.000" autocomplete="off" oninput="onDailyInput(this)">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group" style="width: 100%;">
+                        <label for="bonusSalary">Thưởng / Phụ cấp tháng (VNĐ):</label>
                         <input type="text" id="bonusSalary" class="currency-input" inputmode="numeric"
                             placeholder="VD: 500.000" autocomplete="off" oninput="formatInput(this)">
                     </div>
                 </div>
 
-                <div class="section-title">Chi Phí Ăn Uống</div>
+                <div class="section-title">Chi Phí Ăn Uống & Ngày Công</div>
                 <div class="row">
                     <div class="form-group">
                         <label for="mealPrice">Tiền ăn 1 bữa:</label>
@@ -371,13 +402,13 @@
                     </div>
                     <div class="form-group">
                         <label for="mealsPerDay">Số bữa/ngày:</label>
-                        <input type="number" id="mealsPerDay" inputmode="numeric" placeholder="VD: 3" value=""
+                        <input type="number" id="mealsPerDay" inputmode="numeric" placeholder="VD: 3" value="3"
                             autocomplete="off" oninput="calculateFinance()">
                     </div>
                     <div class="form-group">
                         <label for="workDays">Số ngày làm:</label>
                         <input type="number" id="workDays" inputmode="numeric" placeholder="VD: 26" autocomplete="off"
-                            oninput="calculateFinance()">
+                            oninput="onWorkDaysInput()">
                     </div>
                 </div>
 
@@ -387,12 +418,6 @@
                 </div>
 
                 <div class="expense-scroll-container" id="expenseListContainer">
-                    <div class="expense-row">
-                        <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
-                        <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền"
-                            autocomplete="off" oninput="formatInput(this)">
-                        <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
-                    </div>
                     <div class="expense-row">
                         <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
                         <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền"
@@ -426,7 +451,7 @@
                     <div>
                         <div class="sheet-row">
                             <span style="color: var(--text-light); text-align: center; font-size: 0.95rem;"
-                                id="labelTotalFood">Chi tiết ăn: 0 đ</span>
+                                id="labelTotalFood">0 đ × 0 bữa × 0 ngày</span>
                             <strong id="resTotalFood">0 đ</strong>
                         </div>
                         <div class="sub-words" id="wordsTotalFood">Không đồng</div>
@@ -461,18 +486,21 @@
                     </div>
                 </div>
 
-                <button class="copy-btn" onclick="copyResults()">
-                    📋 Sao chép
-                </button>
+                <div class="action-buttons">
+                    <button class="copy-btn" onclick="copyResults()">
+                        📋 Sao chép
+                    </button>
+                    <button class="clear-btn" onclick="clearAllData()" title="Xóa toàn bộ dữ liệu đã nhập">
+                        🗑️ Xóa
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Chặn click chuột phải
         document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // Chặn các phím tắt mở F12, Inspect, View Source, Save Page
         document.addEventListener('keydown', function (e) {
             if (
                 e.key === 'F12' ||
@@ -484,6 +512,8 @@
                 return false;
             }
         });
+
+        let activeInputMode = 'monthly';
 
         function formatInput(input) {
             let cursorPosition = input.selectionStart;
@@ -498,6 +528,28 @@
             let newLength = input.value.length;
             cursorPosition = cursorPosition + (newLength - oldLength);
             input.setSelectionRange(cursorPosition, cursorPosition);
+            calculateFinance();
+        }
+
+        function onMonthlyInput(input) {
+            activeInputMode = 'monthly';
+            document.getElementById('dailySalaryInput').value = "";
+            formatInput(input);
+        }
+
+        function onDailyInput(input) {
+            activeInputMode = 'daily';
+            document.getElementById('monthlySalary').value = "";
+            formatInput(input);
+        }
+
+        function onWorkDaysInput() {
+            if (activeInputMode === 'daily') {
+                let dailyVal = getRawValue(document.getElementById('dailySalaryInput').value);
+                let workDays = parseFloat(document.getElementById('workDays').value) || 0;
+                let calculatedMonthly = dailyVal * workDays;
+                document.getElementById('monthlySalary').value = calculatedMonthly > 0 ? calculatedMonthly.toLocaleString('vi-VN') : "";
+            }
             calculateFinance();
         }
 
@@ -521,6 +573,30 @@
 
         function removeExpenseRow(button) {
             button.parentElement.remove();
+            calculateFinance();
+        }
+
+        function clearAllData() {
+            // Xóa tất cả các ô input trên trang
+            document.querySelectorAll('input').forEach(input => {
+                input.value = "";
+            });
+            // Khôi phục giá trị mặc định số bữa ăn là 3
+            document.getElementById('mealsPerDay').value = "3";
+            // Đưa danh sách chi phí phát sinh về lại 2 dòng trống cơ bản
+            const container = document.getElementById('expenseListContainer');
+            container.innerHTML = `
+                <div class="expense-row">
+                    <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                    <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                    <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+                </div>
+                <div class="expense-row">
+                    <input type="text" class="name-input" placeholder="Tên khoản chi" oninput="calculateFinance()">
+                    <input type="text" class="currency-input" inputmode="numeric" placeholder="Số tiền" autocomplete="off" oninput="formatInput(this)">
+                    <button type="button" class="btn-icon" onclick="removeExpenseRow(this)">×</button>
+                </div>
+            `;
             calculateFinance();
         }
 
@@ -587,13 +663,20 @@
         let lastResultText = "";
 
         function calculateFinance() {
-            const baseSalary = getRawValue(document.getElementById('baseSalary').value);
+            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+
+            if (activeInputMode === 'daily') {
+                let dailyVal = getRawValue(document.getElementById('dailySalaryInput').value);
+                let calculatedMonthly = dailyVal * workDays;
+                document.getElementById('monthlySalary').value = calculatedMonthly > 0 ? calculatedMonthly.toLocaleString('vi-VN') : "";
+            }
+
+            const baseSalary = getRawValue(document.getElementById('monthlySalary').value);
             const bonusSalary = getRawValue(document.getElementById('bonusSalary').value);
             const totalIncome = baseSalary + bonusSalary;
 
             const mealPrice = getRawValue(document.getElementById('mealPrice').value);
             const mealsPerDay = parseFloat(document.getElementById('mealsPerDay').value) || 0;
-            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
             const totalFood = mealPrice * mealsPerDay * workDays;
 
             document.getElementById('labelTotalFood').innerText = `${formatCurrency(mealPrice)} × ${mealsPerDay} bữa × ${workDays} ngày`;
@@ -650,7 +733,7 @@ ${expenseDetails.join('\n')}
             }
             navigator.clipboard.writeText(lastResultText).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                btn.innerText = "Copied! Đã sao chép thành công ✅";
+                btn.innerText = "Copied! ✅";
                 setTimeout(() => {
                     btn.innerText = "📋 Sao chép";
                 }, 2000);
