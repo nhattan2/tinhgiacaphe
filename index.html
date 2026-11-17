@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Giá Cà Phê</title>
+    <title>Tiện ích</title>
     <link rel="icon" href="logo.png" />
     <style>
         * {
@@ -23,14 +23,15 @@
             height: 0;
         }
 
-        /* --- TRÀN TOÀN MÀN HÌNH PC --- */
+        /* --- SỬ DỤNG 100dvh ĐỂ KHÔNG BỊ THANH TRÌNH DUYỆT ĐIỆN THOẠI CHE KHUẤT --- */
         body {
             background-color: #faf7f2;
             color: #2c221e;
-            padding: 8px;
+            padding: 6px;
             margin: 0;
             width: 100vw;
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,18 +41,17 @@
         /* Thanh điều hướng chuyển tab */
         .nav-tabs {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             width: 100%;
             max-width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             overflow-x: auto;
-            padding-bottom: 2px;
             flex-shrink: 0;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 10px 4px;
+            padding: 9px 6px;
             font-size: 13px;
             font-weight: bold;
             border: none;
@@ -67,14 +67,15 @@
         .tab-btn.active {
             background: #d35400;
             color: white;
-            box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(211, 84, 0, 0.3);
         }
 
-        /* Khu vực chứa các tab fit toàn màn hình */
+        /* Khu vực chứa các tab tự động co giãn theo phần diện tích còn lại */
         .tab-content {
             display: none;
             width: 100%;
-            height: calc(100vh - 55px);
+            flex: 1;
+            min-height: 0;
             flex-direction: column;
             overflow: hidden;
         }
@@ -86,11 +87,12 @@
         /* CSS chung cho các khung container */
         .container {
             background: #fff;
-            padding: 16px;
+            padding: 12px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(44, 34, 30, 0.08);
             width: 100%;
             height: 100%;
+            min-height: 0;
             box-sizing: border-box;
             border: 1px solid #f0e6dc;
             display: flex;
@@ -131,7 +133,7 @@
             margin-bottom: 4px;
             font-weight: bold;
             color: #4a3b32;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         input,
@@ -324,7 +326,7 @@
             background: #fdfaf6;
             border: 1px solid #f0e6dc;
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             margin-top: auto;
             flex-shrink: 0;
         }
@@ -335,12 +337,12 @@
             align-items: center;
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             color: #4a3b32;
         }
 
         .summary-words {
-            font-size: 13px;
+            font-size: 12px;
             color: #7f6e62;
             font-style: italic;
             text-align: right;
@@ -404,17 +406,23 @@
             padding: 6px;
         }
 
-        /* Tab 4: CÂN CÀ PHÊ GIAO DIỆN CHUẨN ĐẸP */
+        /* --- TAB 4: CÂN CÀ PHÊ (TỐI ƯU HIỂN THỊ TRỌN VẸN KHÔNG CHE NÚT) --- */
+        #tab-canca .container {
+            overflow: hidden;
+            padding: 10px;
+        }
+
         .can-ca-container {
             display: flex;
             flex-direction: column;
             height: 100%;
-            gap: 8px;
+            min-height: 0;
+            gap: 6px;
         }
 
         .can-ca-inputs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
@@ -422,8 +430,13 @@
             flex: 1;
         }
 
+        .can-ca-inputs input {
+            padding: 7px 10px;
+        }
+
         .table-container-canca {
             flex: 1;
+            min-height: 0;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             overflow-y: auto;
@@ -439,9 +452,9 @@
         .can-ca-table th {
             background-color: #e8f5e9;
             color: #1b5e20;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 800;
-            padding: 10px 8px;
+            padding: 8px 6px;
             position: sticky;
             top: 0;
             z-index: 2;
@@ -449,14 +462,14 @@
         }
 
         .can-ca-table td {
-            padding: 6px;
+            padding: 5px 6px;
             border-bottom: 1px solid #eee;
         }
 
         .can-ca-table td input {
             width: 100%;
-            padding: 8px 12px;
-            font-size: 18px;
+            padding: 7px 10px;
+            font-size: 17px;
             font-weight: 800;
             border: 2px solid #bbb;
             border-radius: 6px;
@@ -471,17 +484,22 @@
             box-shadow: 0 0 6px rgba(27, 94, 32, 0.3);
         }
 
+        #tab-canca .summary-box {
+            margin-top: 0;
+            padding: 7px 10px;
+        }
+
         .can-ca-actions {
-            display: flex;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
             flex-shrink: 0;
-            margin-top: 4px;
+            padding-bottom: env(safe-area-inset-bottom, 2px);
         }
 
         .can-ca-actions .btn-act {
-            flex: 1;
-            padding: 12px 6px;
-            font-size: 14px;
+            padding: 11px 4px;
+            font-size: 12px;
             font-weight: 800;
             border: none;
             border-radius: 8px;
@@ -490,7 +508,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
+            white-space: nowrap;
             transition: opacity 0.2s;
         }
 
@@ -796,7 +815,7 @@
         <button class="tab-btn active" onclick="switchTab('coffee')">Giá ☕</button>
         <button class="tab-btn" onclick="switchTab('fastcalc')">Tính 💵</button>
         <button class="tab-btn" onclick="switchTab('counting')">Đếm 💵</button>
-        <button class="tab-btn" onclick="switchTab('canca')">CÂN CÀ PHÊ</button>
+        <button class="tab-btn" onclick="switchTab('canca')">CÂN ☕</button>
         <button class="tab-btn" onclick="switchTab('converter')">Đổi Excel 🔄</button>
         <button class="tab-btn" onclick="switchTab('tinhcong')">Tính Công</button>
     </div>
@@ -914,7 +933,7 @@
         </div>
     </div>
 
-    <!-- TAB 4: CÂN CÀ PHÊ (ĐÃ SỬA CHUẨN ĐẸP 100%) -->
+    <!-- TAB 4: CÂN CÀ PHÊ -->
     <div id="tab-canca" class="tab-content">
         <div class="container">
             <div class="can-ca-container">
@@ -952,7 +971,7 @@
                         <span id="canCaTongKg">Tổng số kg: 0 kg</span>
                     </div>
                     <div class="summary-line"
-                        style="border-top: 1px dashed #a5d6a7; margin-top: 4px; padding-top: 4px; color: #b71c1c; font-size: 16px;">
+                        style="border-top: 1px dashed #a5d6a7; margin-top: 3px; padding-top: 3px; color: #b71c1c; font-size: 15px;">
                         <span>💰 THÀNH TIỀN:</span>
                         <span id="canCaThanhTienSo">0 VNĐ</span>
                     </div>
@@ -962,10 +981,10 @@
 
                 <!-- 4 Nút chức năng nằm ngang trên 1 hàng -->
                 <div class="can-ca-actions">
-                    <button class="btn-act btn-act-add" onclick="themDongCanCa()">➕ Thêm dòng</button>
-                    <button class="btn-act btn-act-copy" onclick="copyCanCaContent()">📋 Sao chép</button>
-                    <button class="btn-act btn-act-excel" onclick="chuyenDoiExcelCanCaDirect()">📊 Chuyển Excel</button>
-                    <button class="btn-act btn-act-clear" onclick="xoaHetCanCa()">🗑️ Xóa hết</button>
+                    <button class="btn-act btn-act-add" onclick="themDongCanCa()">➕ Thêm</button>
+                    <button class="btn-act btn-act-copy" onclick="copyCanCaContent()">📋Copy</button>
+                    <button class="btn-act btn-act-excel" onclick="chuyenDoiExcelCanCaDirect()">📊Excel</button>
+                    <button class="btn-act btn-act-clear" onclick="xoaHetCanCa()">🗑️Xóa</button>
                 </div>
             </div>
         </div>
@@ -976,7 +995,7 @@
         <div class="container">
             <div class="form-group" style="flex: 1; display: flex; flex-direction: column;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                    <label style="margin-bottom: 0;">Chuyển báo cáo Cân Cà Phê thành Excel:</label>
+                    <label style="margin-bottom: 0;">Chuyển báo cáo Cân ☕ thành Excel:</label>
                     <div style="display: flex; gap: 6px;">
                         <button onclick="pasteFromClipboard()"
                             style="background: #2980b9; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">📋
@@ -1540,7 +1559,7 @@
                 const tdBao = document.createElement('td');
                 tdBao.style.fontWeight = '800';
                 tdBao.style.color = '#1b5e20';
-                tdBao.style.fontSize = '18px';
+                tdBao.style.fontSize = '17px';
                 tdBao.innerText = index + 1;
                 tr.appendChild(tdBao);
 
